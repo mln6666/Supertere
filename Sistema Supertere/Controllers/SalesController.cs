@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Sistema_Supertere.Context;
 using Sistema_Supertere.Models;
+using Sistema_Supertere.ViewModels;
 
 namespace Sistema_Supertere.Controllers
 {
@@ -52,6 +53,79 @@ namespace Sistema_Supertere.Controllers
 
 
             return View();
+        }
+        [HttpPost]
+        public JsonResult NewSale(SaleVM O)
+        {
+            //CustomerName contiene el id del cliente
+            bool status = false;
+            bool final = false;
+
+
+            Sale sale = new Sale();
+            Bill bill = new Bill();
+
+            var cusid = Int32.Parse(O.CustomerName);
+
+
+            if (ModelState.IsValid)
+            {
+                if (O.SaleState=="0") { sale.SaleState = SaleState.Efectivo; } else { if (O.SaleState == "1") { sale.SaleState = SaleState.Tarjeta;} }
+                bill.SaleTotal = O.SaleTotal;
+                bill.Comments = O.Comments;
+                bill.SaleDate = O.SaleDate;
+                bill.LinesTotal = O.SaleTotal;
+                bill.IdCustomer = cusid;
+                db.Bills.Add(bill);
+                db.SaveChanges();
+
+                sale.SaleDate = O.SaleDate;
+                sale.Comments = O.Comments;
+                sale.SaleTotal = O.SaleTotal;
+                sale.LinesTotal = O.SaleTotal;
+                sale.IdBill = bill.IdBill;
+                sale.IdCustomer = cusid;
+
+                db.Sales.Add(sale);
+                db.SaveChanges();
+
+                foreach (var i in O.SaleLines)
+                {
+                    BillLine billline = new BillLine();
+                    billline.IdProduct = i.IdProduct;
+                    billline.LinePrice = i.LinePrice;
+                    billline.LineQuantity = i.LineQuantity;
+                    billline.LineTotal = i.LineTotal;
+                    billline.IdBill = bill.IdBill;
+                    db.BillLines.Add(billline);
+                    db.SaveChanges();
+
+                    SaleLine saleline = new SaleLine();
+                    saleline.IdProduct = i.IdProduct;
+                    saleline.LinePrice = i.LinePrice;
+                    saleline.LineQuantity = i.LineQuantity;
+                    saleline.LineTotal = i.LineTotal;
+                    saleline.IdSale = sale.IdSale;
+
+                    db.SaleLines.Add(saleline);
+                    db.SaveChanges();
+
+                    Product prod = new Product();
+                    prod = db.Products.Find(i.IdProduct);
+                    prod.Stock = prod.Stock - i.LineQuantity;
+                    db.Entry(prod).State = EntityState.Modified;
+                    db.SaveChanges();
+
+
+                }
+                status = true;
+
+            }
+            else
+            {
+                status = false;
+            }
+            return new JsonResult { Data = new { status = status } };
         }
 
 
