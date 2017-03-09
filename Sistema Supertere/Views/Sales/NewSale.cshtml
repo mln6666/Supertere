@@ -2,7 +2,8 @@
 @{
     ViewBag.Title = "NewSale";
 }
-
+<style>.select2{width: 100%!important;}
+    </style>
 
 
 
@@ -45,7 +46,7 @@
         </select>
     </td>
     <td class="text-center">
-        <input type="date" class="panel-info form-control" id="saledate" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="dd/mm/aaaa"/>
+        <input type="date" class="panel-info form-control fina text-center" id="saledate" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="dd/mm/aaaa"/>
         <span id="spansaledate" class="text-danger" style="display: block"></span>
 
     </td>
@@ -58,10 +59,10 @@
 <legend style="margin-bottom: 2px;">
     Listado Productos
 </legend>
-<table id="tablaprod" class="table table-condensed table-bordered">
+<table id="tablaprod" class="table table-condensed table-bordered" style="table-layout: fixed">
     <thead class="tableStyle">
     <tr class="text-center">
-        <th class="text-center">
+        <th class="text-center" style="width: 40%">
             Producto
         </th>
       
@@ -74,18 +75,16 @@
         <th class="text-center">
             Total($)
         </th>
-        <th class="text-center">
-            Acción
-        </th>
+        
     </tr>
     </thead>
     <tbody id="last">
     <td>
-        <select class="js-example-basic-single" id="linedescription" onchange="javacript: var valor = this.options[selectedIndex].text; document.getElementById('shadow').value = valor;">
-            <option value="0x">Seleccionar Producto...</option>
+        <select class="js-example-basic-single sinbedit fina" style="width: 100%" id="linedescription" onchange="javacript: var valor = (this.options[selectedIndex].text).split('|')[0]; document.getElementById('shadow').value = valor; getprice(); fquantity();">
+            <option></option>
             @foreach (var item in ViewBag.Products)
             {
-                <option value="@item.IdProduct">@item.IdProduct - @item.ProductDescription</option>
+                <option value="@item.IdProduct">@item.ProductDescription |@item.Barcode</option>
             }
         </select>
         <span id="spanlinedescription" class="text-danger" style="display: block"></span>
@@ -94,23 +93,22 @@
     </td>
    
     <td>
-        <input type="number" class="panel-info form-control " value="1" id="linequantity" onFocus="this.select()" onchange="totallinea()" oninput="totallinea()" @*onkeypress="solonumerosptocoma(); enterToSave();"*@ />
+        <input type="number" class="panel-info form-control  fina text-center" value="1" id="linequantity" onFocus="this.select()" onchange="totallinea(); valqp(this);" oninput="totallinea();valqp(this)" @*onkeypress="solonumerosptocoma(); enterToSave();"*@ />
         <span id="spanlinequantity" class="text-danger" style="display: block"></span>
 
     </td>
     <td>
-        <input type="text" class="panel-info form-control " id="lineprice" onFocus="this.select()" onchange="totallinea();" oninput="totallinea()"@* onkeypress="solonumerosptocoma(); enterToSave();"*@ />
+        <input type="number" class="panel-info form-control  fina text-center" id="lineprice" onFocus="this.select()" onchange="totallinea(); valqp(this);" oninput="totallinea(); valqp(this);"@* onkeypress="solonumerosptocoma(); enterToSave();"*@ />
         <span id="spanlineprice" class="text-danger" style="display: block"></span>
 
     </td>
     <td>
-        <input type="text" class="panel-info text-center " value="0.00" id="linetotal" readonly="readonly"/>
+        <input type="text" class="panel-default text-center form-control new2 fina" value="0.00" id="linetotal" readonly="readonly"/>
         <span id="spanlinetotal" class="text-danger" style="display: block"></span>
 
     </td>
-    <td>
-        <button type="button" id="add" class="btn btn-success btn-sm" value="Agregar" style="bottom: auto"/>Agregar
-        <span class="glyphicon glyphicon-plus"></span>
+    <td style="width: 5%">
+        <button type="button" id="add" class="btn btn-success btn-sm" value="Agregar" style="bottom: auto"/><span class="glyphicon glyphicon-plus"></span>
     </td>
 
     </tbody>
@@ -124,23 +122,50 @@
 <table class="table table-condensed  table-bordered">
 
     <thead class="">
+    <tr class="text-right">
+        <td class="text-center">
+            Observaciones
+        </td>
+        <td class="text-center">
+            Total
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <textarea type="text" class="panel-info form-control sinbedit fina" id="comments" onFocus="this.select()" placeholder=""></textarea>
+        </td>
+        <td>
+            <input type="text" class="panel-info form-control sinb fina text-center" value="0.00" id="saletotal" placeholder="" readonly="readonly"/>
+            <span id="spansaletotal" class="text-danger" style="display: block"></span>
+
+        </td>
+    </tr>
+
+    </tbody>
+
+</table>
+<table class="table table-condensed  table-bordered">
+
+    <thead class="">
         <tr class="text-right">
             <td class="text-center">
-                Observaciones
+                Entrega
             </td>
-            <td class="text-center">
-                Total
+            <td id="titvuelto" class="text-center">
+                Vuelto
             </td>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>
-                <textarea type="text" class="panel-info form-control" id="comments" onFocus="this.select()" placeholder=""></textarea>
+                <input type="number" class="panel-info form-control fina" id="entrega" onFocus="this.select()" oninput="calcvuelto()" onchange="calcvuelto()"  placeholder=""></input>
             </td>
             <td>
-                <input type="text" class="panel-info text-center" value="0.00" id="saletotal" placeholder="" readonly="readonly"/>
-                <span id="spansaletotal" class="text-danger" style="display: block"></span>
+                <input type="text" class="panel-info form-control sinb fina text-center" value="0.00" id="vuelto" placeholder="" readonly="readonly"/>
+                <span id="spanvuelto" class="text-danger text-center" style="display: block"></span>
 
             </td>
         </tr>
@@ -163,13 +188,32 @@
 
 @section Scripts{
     <script>
+        function formatState(state) {
+            if (!state.id) { return state.text; }
+            var str = state.text;
+            var after = str.substr(str.indexOf("|") + 1);
+            var before = str.split('|')[0];
+            var $state = $(
+              '<span>'+before+'- <span class="glyphicon glyphicon-barcode"></span> '+after+'</span>'
+           );
+            return $state;
+        };
+        function formatSelection(val) {
+            var str = val.text;
+            var before = str.split('|')[0];
+            return before;
+        }
 
         $(document).ready(function() {
             orderItems = [];
             verifproductos = [];
             totgral = [];
-            $(".js-example-basic-single").select2();
+            $(".js-example-basic-single").select2({
+                width:"element",
+                placeholder: "Seleccionar producto...",
 
+                templateResult: formatState, templateSelection: formatSelection
+            });
 
         });
 
@@ -185,7 +229,7 @@
             } else {
                 $('#spanlinedescription').html('');
             }
-            if ($('#linedescription').val().trim() == '0x') {
+            if ($('#linedescription').val().trim() == '') {
                 isValidItem = false;
                 $('#spanlinedescription').html('Requerido.');
             } else {
@@ -261,7 +305,7 @@
                 totgral.push(
                     parseFloat($('#linetotal').val().trim())
                 );
-                $("#linedescription").val("0x").trigger('change');
+                $("#linedescription").val("").trigger('change');
                 $('#lineprice,#linequantity,#linetotal').val('0.00');
                 $('#linequantity').val('1');
 
@@ -419,10 +463,10 @@
                 $.each(orderItems, function(i, val) {
                     var $row = $('<tr class="elim"></tr>');
 
-                    $row.append($('<td style="width: 40%"><textarea readonly="readonly" maxlength="140" id="descz" Name="' + val.IdProduct + '"  value="' + val.LineDescription + '">' + val.LineDescription + '</textarea></td>'));
-                    $row.append($('<td><input type="number" id="quantityz" maxlength="10" oninput="actlinetot(this)" onchange="actlinetot(this)" value="' + val.LineQuantity + '"><span class="text-danger"></span></td>'));
-                    $row.append($('<td><input type="number" id="pricez" maxlength="10" oninput="actlinetot(this)" onchange="actlinetot(this)" value="' + val.LinePrice + '"><span class="text-danger"></span></td>'));
-                    $row.append($('<td><input type="number" id="totalz" maxlength="10" value="' + val.LineTotal + '"><span class="text-danger"></span></td>'));
+                    $row.append($('<td><input class="panel-info form-control sinb fina" readonly="readonly" maxlength="140" id="descz" Name="' + val.IdProduct + '"  value="' + val.LineDescription + '"></td>'));
+                    $row.append($('<td><input type="number" class="panel-info form-control sinbedit fina text-center"  id="quantityz" maxlength="10" oninput="valqp(this);actlinetot(this)" onchange="valqp(this);actlinetot(this)" value="' + val.LineQuantity + '"><span class="text-danger"></span></td>'));
+                    $row.append($('<td><input type="number" class="panel-info form-control sinbedit fina text-center" id="pricez" maxlength="10" oninput="valqp(this);actlinetot(this)" onchange="valqp(this);actlinetot(this)" value="' + val.LinePrice + '"><span class="text-danger"></span></td>'));
+                    $row.append($('<td><input type="number" class="panel-info form-control sinb fina text-center" id="totalz" readonly="readonly" maxlength="10" value="' + val.LineTotal + '"><span class="text-danger"></span></td>'));
 
                     var $remove = $('<a style="color:red; width: 37px; text-align: center;vertical-align: -webkit-baseline-middle;"  onclick="borrarfila(this)"><span class="glyphicon glyphicon-remove"></span></a>');
 
@@ -453,9 +497,9 @@
             olinetotals = [];
             oids = [];
 
-            $("textarea[id='descz']").map(function() {
+            $("input[id='descz']").map(function() {
                 olinedescriptions.push((this.value));
-                oids.push((this.name))
+                oids.push((this.name));
             });
             $("input[id='quantityz']").map(function() { olineprices.push(parseFloat(this.value)) });
             $("input[id='pricez']").map(function() { olinequantities.push(parseFloat(this.value)) });
@@ -502,9 +546,57 @@
             var gral = 0;
             $("input[id='totalz']").map(function() { gral += (parseFloat(this.value)) });
             document.getElementById("saletotal").value = gral;
+        }
+        function calcvuelto() {
+            var entrega = parseFloat($('#entrega').val());
+            var tot = parseFloat($('#saletotal').val());
+            var vuelto = entrega - tot;
+            document.getElementById("vuelto").value = vuelto;
+            if (entrega >= tot) {
+                $("#titvuelto").html('Vuelto');
+                $("#titvuelto").removeClass('text-danger');
+                $("#vuelto").removeClass('text-danger');
+                $("#titvuelto").addClass('text-success');
+            } else {
+                $("#titvuelto").html('Saldo');
+                $("#titvuelto").addClass('text-danger');
+                $("#vuelto").addClass('text-danger');
+
+            }
+
+        }
+        function valqp(x) {
+            if (x.value.trim() == "" || x.value == null) {
+                $(x).closest('td').find('.text-danger').html('Requerido.');
+            } else {
+                if (x.value.trim() == 0) {
+                    $(x).closest('td').find('.text-danger').html('Debe ser mayor a 0.');
+                } else {
+                    $(x).closest('td').find('.text-danger').html('');
+
+                }
+            }
 
 
         }
+        function fquantity() { setTimeout(function () { $("#linequantity").focus(); }, 1); }
+        function getprice() {
+            if ($("#linedescription").val() != "") {
+                var options = {};
+                options.url = '@Url.Action("Getproductdata", "Products")';
+                options.type = "GET";
+                options.data = { "pro": $("#linedescription").val() };
+                options.dataType = "json";
+                options.success = function (data) {
+                    document.getElementById("lineprice").value = data;
+                    totallinea();
+                };
+                $.ajax(options);
+            }
+          
+
+
+        };
 
     </script>
 }

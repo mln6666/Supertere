@@ -2609,7 +2609,7 @@ input[type="search"] {
   input[type="time"].form-control,
   input[type="datetime-local"].form-control,
   input[type="month"].form-control {
-    line-height: 38px;
+    line-height: initial;
   }
   input[type="date"].input-sm,
   input[type="time"].input-sm,

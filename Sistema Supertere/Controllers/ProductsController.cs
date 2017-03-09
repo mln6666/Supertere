@@ -21,7 +21,20 @@ namespace Sistema_Supertere.Controllers
             var products = db.Products.Include(p => p.Category).Include(p => p.Trademark);
             return View(products.ToList());
         }
+        public JsonResult Getproductdata(string pro)
+        {
+           
 
+            var proid = Int32.Parse(pro);
+
+
+            Product productdata = db.Products.ToList().Find(u => u.IdProduct == proid);
+
+
+            var midato = productdata.PublicPrice.ToString();
+
+            return Json(midato, JsonRequestBehavior.AllowGet);
+        }
         // GET: Products/Details/5
         public ActionResult Details(int? id)
         {

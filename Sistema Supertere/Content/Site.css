@@ -15,10 +15,34 @@
 .dl-horizontal dt {
     white-space: normal;
 }
+ .sinbedit {
+           border-left: none;
+           border-right: none;
+           border-top: none;
+           border-bottom-color: burlywood;
+       }
+  .sinbnew {
+           border-left: none;
+           border-right: none;
+           border-top: none;
+           border-bottom-color: blue;
+       }
+  .new2 {
+          
+     background: none!important;
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
+       }
+ .sinb {
+           border-left: none;
+           border-right: none;
+           border-top: none;
+           border-bottom-color: lightsteelblue;
+     background: none!important;
+
+       }
+ .fina{
+     height: initial!important;
+         padding-top: 2px!important;
+    padding-bottom: 2px!important;}
+
+
