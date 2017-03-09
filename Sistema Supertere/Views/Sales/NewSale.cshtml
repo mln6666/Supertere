@@ -46,6 +46,8 @@
     </td>
     <td class="text-center">
         <input type="date" class="panel-info form-control" id="saledate" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="dd/mm/aaaa"/>
+        <span id="spansaledate" class="text-danger" style="display: block"></span>
+
     </td>
    
     </tbody>
@@ -62,13 +64,13 @@
         <th class="text-center">
             Producto
         </th>
-        <th class="text-center">
-            Precio($)
-        </th>
+      
         <th class="text-center">
             Cantidad
         </th>
-
+        <th class="text-center">
+            P. Unit.
+        </th>
         <th class="text-center">
             Total($)
         </th>
@@ -80,23 +82,31 @@
     <tbody id="last">
     <td>
         <select class="js-example-basic-single" id="linedescription" onchange="javacript: var valor = this.options[selectedIndex].text; document.getElementById('shadow').value = valor;">
-            <option value="0">Seleccionar Producto...</option>
+            <option value="0x">Seleccionar Producto...</option>
             @foreach (var item in ViewBag.Products)
             {
                 <option value="@item.IdProduct">@item.IdProduct - @item.ProductDescription</option>
             }
         </select>
+        <span id="spanlinedescription" class="text-danger" style="display: block"></span>
+
         <input type="hidden" id="shadow" value="">
     </td>
+   
     <td>
-        <input type="text" class="panel-info form-control " id="lineprice" onFocus="this.select()" @*onchange="totallinea(); fquantity()" oninput="totallinea()" onkeypress="solonumerosptocoma(); enterToSave();"*@/>
-    </td>
-    <td>
-        <input type="number" class="panel-info form-control " value="1" id="linequantity" onFocus="this.select()" @*onchange="totallinea()" oninput="totallinea()" onkeypress="solonumerosptocoma(); enterToSave();"*@/>
-    </td>
+        <input type="number" class="panel-info form-control " value="1" id="linequantity" onFocus="this.select()" onchange="totallinea()" oninput="totallinea()" @*onkeypress="solonumerosptocoma(); enterToSave();"*@ />
+        <span id="spanlinequantity" class="text-danger" style="display: block"></span>
 
+    </td>
+    <td>
+        <input type="text" class="panel-info form-control " id="lineprice" onFocus="this.select()" onchange="totallinea();" oninput="totallinea()"@* onkeypress="solonumerosptocoma(); enterToSave();"*@ />
+        <span id="spanlineprice" class="text-danger" style="display: block"></span>
+
+    </td>
     <td>
         <input type="text" class="panel-info text-center " value="0.00" id="linetotal" readonly="readonly"/>
+        <span id="spanlinetotal" class="text-danger" style="display: block"></span>
+
     </td>
     <td>
         <button type="button" id="add" class="btn btn-success btn-sm" value="Agregar" style="bottom: auto"/>Agregar
@@ -129,7 +139,9 @@
                 <textarea type="text" class="panel-info form-control" id="comments" onFocus="this.select()" placeholder=""></textarea>
             </td>
             <td>
-                <input type="text" class="panel-info text-center" value="0.00" id="saletotal" placeholder="" readonly="readonly" />
+                <input type="text" class="panel-info text-center" value="0.00" id="saletotal" placeholder="" readonly="readonly"/>
+                <span id="spansaletotal" class="text-danger" style="display: block"></span>
+
             </td>
         </tr>
 
@@ -151,14 +163,348 @@
 
 @section Scripts{
     <script>
-        
+
         $(document).ready(function() {
-          
+            orderItems = [];
+            verifproductos = [];
+            totgral = [];
             $(".js-example-basic-single").select2();
 
-         
+
         });
 
+        //////COMIENZO ADD
+        //////////////////
+        //////////////////
+        $('#add').click(function() {
+
+            var isValidItem = true;
+            if ($('#linedescription').val().trim() == '') {
+                isValidItem = false;
+                $('#spanlinedescription').html('Requerido.');
+            } else {
+                $('#spanlinedescription').html('');
+            }
+            if ($('#linedescription').val().trim() == '0x') {
+                isValidItem = false;
+                $('#spanlinedescription').html('Requerido.');
+            } else {
+                $('#spanlinedescription').html('');
+            }
+
+            if ($('#lineprice').val().trim() == '') {
+                isValidItem = false;
+                $('#spanlineprice').html('Requerido.');
+            } else {
+                if ($('#lineprice').val().trim() == 0) {
+                    isValidItem = false;
+                    $('#spanlineprice').html('Debe ser mayor a 0.');
+
+                } else {
+                    $('#spanlineprice').html('');
+                }
+            }
+
+
+            if ($('#linequantity').val().trim() == '') {
+                isValidItem = false;
+                $('#spanlinequantity').html('Requerido.');
+            } else {
+                if ($('#linequantity').val().trim() == 0) {
+                    isValidItem = false;
+                    $('#spanlinequantity').html('Debe ser mayor a 0.');
+
+                } else {
+                    $('#spanlinequantity').html('');
+                }
+            }
+            if ($('#linetotal').val().trim() == '') {
+                isValidItem = false;
+                $('#spanlinetotal').html('Requerido.');
+            } else {
+                $('#spanlinetotal').html('');
+            }
+
+
+            if (isValidItem) {
+                ////////////***********//////////
+                var historial = verifproductos;
+                var errorproductos = false;
+                productoact = parseInt($('#linedescription').val().trim());
+                $.each(historial, function() {
+                    if (productoact == parseInt(this)) {
+                        errorproductos = true;
+
+                    }
+                });
+            }
+            if (errorproductos) {
+                isValidItem = false;
+                bootbox.alert({
+                    title: "Producto existente",
+                    message: "El producto: - " + $('#shadow').val().trim() + " - ya se encuentra en el listado. ",
+                    backdrop: true
+                });
+            }
+
+            if (isValidItem) {
+                orderItems.push({
+                    IdProduct: $('#linedescription').val().trim(),
+                    LinePrice: $('#lineprice').val().trim(),
+                    LineQuantity: $('#linequantity').val().trim(),
+                    LineTotal: $('#linetotal').val().trim(),
+                    LineDescription: $('#shadow').val().trim()
+                });
+                verifproductos.push(
+                    parseInt($('#linedescription').val().trim())
+                );
+                totgral.push(
+                    parseFloat($('#linetotal').val().trim())
+                );
+                $("#linedescription").val("0x").trigger('change');
+                $('#lineprice,#linequantity,#linetotal').val('0.00');
+                $('#linequantity').val('1');
+
+                GeneratedItemsTable();
+
+            }
+
+
+        });
+        /////////////////
+        /////////////////
+        /////FIN ADD
+
+        //////COMIENZO SUBMIT
+        //////////////////
+        //////////////////
+        $('#submit').click(function() {
+            var isAllValid = true;
+
+            if ($('#saledate').val().trim() == '') {
+                $('#spansaledate').html('Requerido');
+                isAllValid = false;
+            } else {
+                $('#spansaledate').html('');
+            }
+
+            $("input[id='quantityz']").map(function () {
+
+                if (this.value.trim() == "" || this.value == null) {
+                    $(this).closest('td').find('.text-danger').html('Requerido.');
+                    isAllValid = false;
+                } else {
+                    if (this.value.trim() == 0) {
+                        $(this).closest('td').find('.text-danger').html('Debe ser mayor a 0.');
+
+                        isAllValid = false;
+                    } else {
+                        $(this).closest('td').find('.text-danger').html('');
+
+                    }
+                }
+            });
+            $("input[id='pricez']").map(function () {
+
+                if (this.value.trim() == "" || this.value == null) {
+                    $(this).closest('td').find('.text-danger').html('Requerido.');
+                    isAllValid = false;
+                } else {
+                    if (this.value.trim() == 0) {
+                        $(this).closest('td').find('.text-danger').html('Debe ser mayor a 0.');
+
+                        isAllValid = false;
+                    } else {
+                        $(this).closest('td').find('.text-danger').html('');
+
+                    }
+                }
+            });
+            $("input[id='totalz']").map(function () {
+
+                if (this.value.trim() == "" || this.value == null) {
+                    $(this).closest('td').find('.text-danger').html('Requerido.');
+                    isAllValid = false;
+                } else {
+                    if (this.value.trim() == 0) {
+                        $(this).closest('td').find('.text-danger').html('Debe ser mayor a 0.');
+
+                        isAllValid = false;
+                    } else {
+                        $(this).closest('td').find('.text-danger').html('');
+
+                    }
+                }
+            });
+
+            renew();
+            if (orderItems.length == 0) {
+               
+                toastr["error"]("Es necesario agregar al menos un producto para guardar la venta.");
+                isAllValid = false;
+
+            }
+            if (isAllValid == false) {
+                toastr["error"]("Uno o más campos son incorrectos.", "Error al guardar");
+            }
+
+            if (isAllValid) {
+                bootbox.confirm({
+                    message: "Está por guardar la planilla, ¿Desea continuar?",
+                    buttons: {
+                        confirm: {
+                            label: 'Aceptar',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'Cancelar',
+                            className: 'btn-default'
+                        }
+                    },
+                    callback: function (result1) {
+
+                        if (result1) {
+                            var data = {
+                                CustomerName: $('#customername').val().trim(),
+                                SaleDate: $('#saledate').val().trim(),
+                                SaleTotal: $('#saletotal').val().trim(),
+                                Comments: $('#comments').val().trim(),
+                                SaleState: $('#salestate').val().trim(),
+                                SaleLines: orderItems
+                            }
+
+                            $(this).val('Please wait...');
+                            $("#loader").show();
+
+                            $.ajax({
+                                url: '@Url.Action("NewSale", "Sales")',
+                                type: "POST",
+                                data: JSON.stringify(data),
+                                dataType: "JSON",
+                                contentType: "application/json",
+                                success: function (d) {
+                                    //check is successfully save to database
+                                    if (d.status == true) {
+                                        var url = '@Url.Action("NewSale", "Sales", new {x = 0})';
+                                        window.location.href = url;
+                                    } else {
+                                        $("#loader").hide();
+
+                                        bootbox.alert(d.mensaje);
+                                    }
+                                    $('#submit').val('Save');
+                                },
+                                error: function () {
+                                    alert('Error. Please try again.');
+                                    $('#submit').val('Save');
+                                }
+                            });
+
+                        }
+                    }
+                });
+            }
+
+        });
+
+        /////////////////
+        /////////////////
+        /////FIN SUBMIT
+
+
+        function GeneratedItemsTable() {
+            $('.elim').remove();
+            if (orderItems.length > 0) {
+                $('#orderItems').html('<span class="text-danger"></span>');
+                $.each(orderItems, function(i, val) {
+                    var $row = $('<tr class="elim"></tr>');
+
+                    $row.append($('<td style="width: 40%"><textarea readonly="readonly" maxlength="140" id="descz" Name="' + val.IdProduct + '"  value="' + val.LineDescription + '">' + val.LineDescription + '</textarea></td>'));
+                    $row.append($('<td><input type="number" id="quantityz" maxlength="10" oninput="actlinetot(this)" onchange="actlinetot(this)" value="' + val.LineQuantity + '"><span class="text-danger"></span></td>'));
+                    $row.append($('<td><input type="number" id="pricez" maxlength="10" oninput="actlinetot(this)" onchange="actlinetot(this)" value="' + val.LinePrice + '"><span class="text-danger"></span></td>'));
+                    $row.append($('<td><input type="number" id="totalz" maxlength="10" value="' + val.LineTotal + '"><span class="text-danger"></span></td>'));
+
+                    var $remove = $('<a style="color:red; width: 37px; text-align: center;vertical-align: -webkit-baseline-middle;"  onclick="borrarfila(this)"><span class="glyphicon glyphicon-remove"></span></a>');
+
+
+                    $remove.click(function(e) {
+                        e.preventDefault();
+                        orderItems.splice(i, 1);
+                        verifproductos.splice(i, 1);
+                        renew();
+                        GeneratedItemsTable();
+                        calculogral();
+                    });
+                    $row.append($('<td></td>').append($remove));
+                    $('#tablaprod > tbody:last').append($row);
+                    calculogral();
+
+                });
+            } else {
+                $('#orderItems').html('');
+            }
+        }
+
+        function renew() {
+            orderItems = [];
+            olinedescriptions = [];
+            olineprices = [];
+            olinequantities = [];
+            olinetotals = [];
+            oids = [];
+
+            $("textarea[id='descz']").map(function() {
+                olinedescriptions.push((this.value));
+                oids.push((this.name))
+            });
+            $("input[id='quantityz']").map(function() { olineprices.push(parseFloat(this.value)) });
+            $("input[id='pricez']").map(function() { olinequantities.push(parseFloat(this.value)) });
+            $("input[id='totalz']").map(function() { olinetotals.push(parseFloat(this.value)) });
+
+            for (i = 0; i < olinedescriptions.length; i++) {
+
+                orderItems.push({
+                    IdProduct: oids[i],
+                    LinePrice: olineprices[i],
+                    LineQuantity: olinequantities[i],
+                    LineTotal: olinetotals[i],
+                    LineDescription: olinedescriptions[i]
+
+                });
+            }
+
+        }
+
+        function borrarfila(row) {
+            var a = $(row).closest('td').siblings(':first-child').text();
+
+            toastr.warning("-" + a + "-<br/>Eliminado.", "Producto:");
+            row.closest('tr').remove();
+        }
+
+        function totallinea() {
+            var price = parseFloat($('#lineprice').val());
+            var quantity = parseFloat($('#linequantity').val());
+            var total = (price * quantity);
+            document.getElementById("linetotal").value = total.toFixed(2);
+        }
+
+        function actlinetot(x) {
+            var price = parseFloat($(x).closest('tr').find('#pricez').val());
+
+            var quantity = parseFloat($(x).closest('tr').find('#quantityz').val());
+            var total = (price * quantity);
+            $(x).closest('tr').find('#totalz').val(total);
+            calculogral();
+        }
+
+        function calculogral() {
+            var gral = 0;
+            $("input[id='totalz']").map(function() { gral += (parseFloat(this.value)) });
+            document.getElementById("saletotal").value = gral;
+
+
+        }
 
     </script>
 }
