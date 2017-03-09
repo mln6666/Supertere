@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using MinimercadoAlfredo.Models;
+using Sistema_Supertere.Models;
 
-namespace MinimercadoAlfredo.ViewModels
+namespace Sistema_Supertere.ViewModels
 {
     public class SaleVM
     {

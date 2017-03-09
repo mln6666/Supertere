@@ -1,10 +1,10 @@
-﻿using MinimercadoAlfredo.Models;
+﻿using Sistema_Supertere.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MinimercadoAlfredo.ViewModels
+namespace Sistema_Supertere.ViewModels
 {
     public class PurchaseVM
     {

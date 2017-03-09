@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MinimercadoAlfredo.Models
+namespace Sistema_Supertere.Models
 {
     public class RoleView
     {

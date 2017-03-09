@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Sistema_Supertere.Models.Sale>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Bill.SaleAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer.CustomerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SaleDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SaleAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Discount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comments)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReturnsTotal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LinesTotal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubTotal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SaleTotal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SaleState)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Bill.SaleAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.CustomerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SaleDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SaleAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Discount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comments)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReturnsTotal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LinesTotal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubTotal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SaleTotal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SaleState)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdSale }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdSale }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdSale })
+        </td>
+    </tr>
+}
+
+</table>
