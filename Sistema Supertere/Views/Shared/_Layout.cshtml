@@ -24,7 +24,38 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                  
+                    <li class="dropdown">
+                        <a id="dLabel" data-toggle="dropdown" style="font-weight: bold" class="" data-target="#" href="/page.html">
+                            Ventas <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                            <li>@Html.ActionLink("Nueva", "NewSale", "Sales")</li>
+                            <li>@Html.ActionLink("Listado", "Index", "Sales")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a id="dLabel" data-toggle="dropdown" style="font-weight: bold" class="" data-target="#" href="/page.html">
+                            Compras <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                            <li>@Html.ActionLink("Nueva", "CreatePurchase", "Purchases")</li>
+                            <li>@Html.ActionLink("Listado", "Index", "Purchases")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a id="dLabel" data-toggle="dropdown" style="font-weight: bold" class="" data-target="#" href="/page.html">
+                            Productos <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                            <li style="font-weight: bold;">@Html.ActionLink("Listado", "Index", "Products")</li>
+                            <li style="font-weight: bold;">@Html.ActionLink("Baja Stock", "RemoveStock", "Products")</li>
+                            <li style="font-weight: bold;">@Html.ActionLink("Alta Stock", "AddStock", "Products")</li>
+                            <li>@Html.ActionLink("Rubros", "Index", "Categories")</li>
+                            <li>@Html.ActionLink("Marcas", "Index", "Trademarks")</li>
+
+                        </ul>
+                    </li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>

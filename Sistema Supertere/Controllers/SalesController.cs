@@ -37,32 +37,23 @@ namespace Sistema_Supertere.Controllers
             return View(sale);
         }
 
-        // GET: Sales/Create
-        public ActionResult Create()
+        public ActionResult NewSale()
         {
-            ViewBag.IdBill = new SelectList(db.Bills, "IdBill", "SaleAddress");
-            ViewBag.IdCustomer = new SelectList(db.Customers, "IdCustomer", "CustomerName");
+           
+            ViewBag.Customers = db.Customers.ToList();
+            ViewBag.Products = db.Products.ToList();
+            var nsale = 0;
+            if (db.Sales != null & db.Sales.Count() != 0)
+            {
+                nsale = db.Sales.ToList().LastOrDefault().IdSale;
+            }
+
+            ViewBag.nsale = nsale + 1;
+
+
             return View();
         }
 
-        // POST: Sales/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdSale,SaleDate,SaleAddress,Discount,Comments,ReturnsTotal,LinesTotal,SubTotal,SaleTotal,IdCustomer,IdBill,SaleState")] Sale sale)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Sales.Add(sale);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.IdBill = new SelectList(db.Bills, "IdBill", "SaleAddress", sale.IdBill);
-            ViewBag.IdCustomer = new SelectList(db.Customers, "IdCustomer", "CustomerName", sale.IdCustomer);
-            return View(sale);
-        }
 
         // GET: Sales/Edit/5
         public ActionResult Edit(int? id)
