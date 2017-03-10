@@ -44,5 +44,11 @@
      height: initial!important;
          padding-top: 2px!important;
     padding-bottom: 2px!important;}
-
+   input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            appearance: none !important;
+            margin: 0 !important;
+        }
 

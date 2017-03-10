@@ -21,6 +21,14 @@ namespace Sistema_Supertere.Controllers
             var products = db.Products.Include(p => p.Category).Include(p => p.Trademark);
             return View(products.ToList());
         }
+        public JsonResult ExBarcode(string bc)
+        {
+            //if (Trademark == "")
+            //    Trademark = "[Producto sin Marca]";
+            var existe = db.Products.ToList().Exists(a => a.Barcode == bc);
+
+            return Json(existe, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult Getproductdata(string pro)
         {
            

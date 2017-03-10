@@ -18,11 +18,11 @@ namespace Sistema_Supertere.Models
         [Display(Name = "Cód. Barras")]
         public string Barcode { get; set; }
 
-        [Display(Name = "Costo")]
+        [Display(Name = "P. Costo")]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal? Cost { get; set; }
 
-        [Display(Name = "P Minorista")]
+        [Display(Name = "P. Venta")]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal? PublicPrice { get; set; }
 
