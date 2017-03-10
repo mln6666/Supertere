@@ -100,30 +100,30 @@
         <span id="spanlinetotal" class="text-danger" style="display: block"></span>
 
     </td>
-    <td style="width: 5%">
+    <td class="sinborde" style="width: 5%">
         <button type="button" id="add" class="btn btn-success btn-sm" value="Agregar" style="bottom: auto"/><span class="glyphicon glyphicon-plus"></span>
     </td>
-    <tr id="trtot"><td></td><td></td><th class="text-center gradcelesteosc tittot">TOTAL</th><td class="ftot"><input type="text" class="panel-info form-control sinb fina text-center" value="0.00" id="saletotal" placeholder="" readonly="readonly" style="font-weight: bold;border: none"/>
-        <span id="spansaletotal" class="text-danger" style="display: block"></span></td><td></td></tr>
+    <tr id="trtot"><td class="sinborde"></td><td class="sinborde"></td><th class="text-center gradcelesteosc tittot">TOTAL</th><td class="ftot"><input type="text" class="panel-info form-control sinb fina text-center" value="0.00" id="saletotal" placeholder="" readonly="readonly" style="font-weight: bold;border: none"/>
+        <span id="spansaletotal" class="text-danger" style="display: block"></span></td><td class="sinborde"></td></tr>
     <tr>
-        <td></td>
-        <td></td>
+        <td class="sinborde"></td>
+        <td class="sinborde"></td>
         <th class="text-center ftb">Entrego</th>
         <td class="ftb">
             <input type="number" min="0" max="9999999999" class="panel-info form-control fina text-center" id="entrega" onFocus="this.select()" oninput="calcvuelto()" onchange="calcvuelto()" onkeypress="solonumerosptocoma();"value="0.00"></input>
 
         </td>
-        <td></td>
+        <td class="sinborde"></td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
+        <td class="sinborde"></td>
+        <td class="sinborde"></td>
         <th id="titvuelto" class="text-center ftb">Vuelto</th>
         <td class="ftb">
             <input type="text" class="panel-info form-control sinb fina text-center" value="0.00" id="vuelto" placeholder="" readonly="readonly" />
             <span id="spanvuelto" class="text-danger text-center" style="display: block"></span>
         </td>
-        <td></td>
+        <td class="sinborde"></td>
     </tr>
     </tbody>
 
@@ -461,7 +461,7 @@
                         GeneratedItemsTable();
                         calculogral();
                     });
-                    $row.append($('<td></td>').append($remove));
+                    $row.append($('<td class="sinborde"></td>').append($remove));
                     $('#trtot').before($row);
                     calculogral();
 
@@ -528,6 +528,8 @@
             var gral = 0;
             $("input[id='totalz']").map(function() { gral += (parseFloat(this.value)) });
             document.getElementById("saletotal").value = gral.toFixed(2);
+            calcvuelto();
+
         }
         function calcvuelto() {
             var entrega = parseFloat($('#entrega').val());
