@@ -182,9 +182,20 @@ namespace Sistema_Supertere.Controllers
         // POST: Sales/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, int? view)
         {
             Sale sale = db.Sales.Find(id);
+           
+            foreach (var item in sale.SaleLines)
+            {
+                Product prod = new Product();
+                prod = db.Products.Find(item.IdProduct);
+                prod.Stock = prod.Stock + item.LineQuantity;
+                db.Entry(prod).State = EntityState.Modified;
+                db.SaveChanges();
+
+            }
+
             db.Sales.Remove(sale);
             db.SaveChanges();
             return RedirectToAction("Index");

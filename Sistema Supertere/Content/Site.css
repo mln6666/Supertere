@@ -52,3 +52,21 @@
             margin: 0 !important;
         }
 
+      .cabecera {
+            font-size: medium !important;
+            font-weight: bold !important;
+            font-style: italic !important;
+          color: #1d2121 !important;
+        }
+      .detalles {
+            font-weight: bold !important;
+          color: #1d2121 !important;
+        }
+      .gradcelesteosc {
+    /*background:#efa631;*/
+    background: -webkit-linear-gradient(top, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(73,165,191,1) 100%);
+}
+      .gradcelestecla {
+    background: -webkit-linear-gradient(top, rgba(118,168,207,1) 0%, rgba(242,242,242,1) 0%, rgba(118,168,207,1) 100%);
+   
+}
