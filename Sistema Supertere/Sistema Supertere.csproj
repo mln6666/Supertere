@@ -390,6 +390,11 @@
     <Content Include="Content\hover-min.css" />
     <Content Include="Content\hover.css" />
     <Content Include="Content\Images\ajax-loader.gif" />
+    <Content Include="Content\Images\fon 1.jpg" />
+    <Content Include="Content\Images\fondo 1.png" />
+    <Content Include="Content\Images\fondo 2.jpg" />
+    <Content Include="Content\Images\fondo 3.jpg" />
+    <Content Include="Content\Images\fondo 4.jpg" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />

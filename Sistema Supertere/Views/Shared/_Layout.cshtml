@@ -16,11 +16,18 @@
             height: 100%;
             width: 100%;
             background: rgba( 255, 255, 255, .8 ) url("/Content/Images/ajax-loader.gif") 50% 50% no-repeat;
-        }</style>
+        }
+    
+     @@media print {
+            a[href]:after {
+                content: none !important;
+            }
+        }
+    </style>
 
 
 </head>
-<body>
+<body class="full" background='@Url.Content("~/Content/Images/fon 1.jpg")'>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -33,7 +40,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                  
+
                     <li class="dropdown">
                         <a id="dLabel" data-toggle="dropdown" style="font-weight: bold" class="" data-target="#" href="/page.html">
                             Ventas <span class="caret"></span>
@@ -83,8 +90,8 @@
     </div>
 
     @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)*@
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)*@
     @Scripts.Render("~/js")
 
     @RenderSection("scripts", required: false)

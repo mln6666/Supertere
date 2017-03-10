@@ -27,13 +27,13 @@
         </tr>
     </thead>
     <tbody>
-    <td class="text-center"><select class="form-control text-right" id="salestate">
+    <td class="text-center ftb"><select class="form-control text-right" id="salestate">
     <option value="0">Efectivo</option>
     <option value="1">Cta. Corriente</option>
     <option value="3">Tarjeta</option>
 </select>
     </td>
-    <td class="text-center">
+    <td class="text-center ftb">
         <select id="customername">
             <option></option>
             @foreach (var item in ViewBag.Customers)
@@ -42,7 +42,7 @@
             }
         </select>
     </td>
-    <td class="text-center">
+    <td class="text-center ftb">
         <input type="date" class="panel-info form-control fina text-center" id="saledate" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="dd/mm/aaaa" style="width: auto;text-align: center;display:initial"/>
         <span id="spansaledate" class="text-danger" style="display: block"></span>
 
@@ -59,20 +59,20 @@
             Descripción
         </th>
       
-        <th class="text-center">
+        <th class="text-center" style="width: 19%">
             Cantidad
         </th>
-        <th class="text-center">
+        <th class="text-center" style="width: 19%">
             P. Unit.
         </th>
-        <th class="text-center">
+        <th class="text-center" style="width: 19%">
             Importe($)
         </th>
         
     </tr>
     </thead>
     <tbody id="last">
-    <td>
+    <td class="ftb">
         <select class="js-example-basic-single sinbedit fina" style="width: 100%" id="linedescription" onchange="javacript: var valor = (this.options[selectedIndex].text).split('|')[0]; document.getElementById('shadow').value = valor; getprice(); fquantity();">
             <option></option>
             @foreach (var item in ViewBag.Products)
@@ -85,31 +85,31 @@
         <input type="hidden" id="shadow" value="">
     </td>
    
-    <td>
+    <td class="ftb">
         <input type="number" min="0" max="9999999999" class="panel-info form-control  fina text-center" value="1" id="linequantity" onFocus="this.select()" onchange="totallinea(); valqp(this);" oninput="totallinea();valqp(this)"onkeypress="solonumerosptocoma();" />
         <span id="spanlinequantity" class="text-danger" style="display: block"></span>
 
     </td>
-    <td>
+    <td class="ftb">
         <input type="number" min="0" max="9999999999" class="panel-info form-control  fina text-center" id="lineprice" onFocus="this.select()" onchange="totallinea(); valqp(this);" oninput="totallinea(); valqp(this);"onkeypress="solonumerosptocoma();" />
         <span id="spanlineprice" class="text-danger" style="display: block"></span>
 
     </td>
-    <td>
-        <input type="text" class="panel-default text-center form-control new2 fina" value="0.00" id="linetotal" readonly="readonly"/>
+    <td class="ftb">
+        <input type="text" class="panel-default text-center form-control new2 fina" value="0.00" id="linetotal" readonly="readonly" style="font-weight: bold"/>
         <span id="spanlinetotal" class="text-danger" style="display: block"></span>
 
     </td>
     <td style="width: 5%">
         <button type="button" id="add" class="btn btn-success btn-sm" value="Agregar" style="bottom: auto"/><span class="glyphicon glyphicon-plus"></span>
     </td>
-    <tr id="trtot"><td></td><td></td><th class="text-center">TOTAL</th><td><input type="text" class="panel-info form-control sinb fina text-center" value="0.00" id="saletotal" placeholder="" readonly="readonly"/>
+    <tr id="trtot"><td></td><td></td><th class="text-center gradcelesteosc tittot">TOTAL</th><td class="ftot"><input type="text" class="panel-info form-control sinb fina text-center" value="0.00" id="saletotal" placeholder="" readonly="readonly" style="font-weight: bold;border: none"/>
         <span id="spansaletotal" class="text-danger" style="display: block"></span></td><td></td></tr>
     <tr>
         <td></td>
         <td></td>
-        <th class="text-center">Entrego</th>
-        <td>
+        <th class="text-center ftb">Entrego</th>
+        <td class="ftb">
             <input type="number" min="0" max="9999999999" class="panel-info form-control fina text-center" id="entrega" onFocus="this.select()" oninput="calcvuelto()" onchange="calcvuelto()" onkeypress="solonumerosptocoma();"value="0.00"></input>
 
         </td>
@@ -118,8 +118,8 @@
     <tr>
         <td></td>
         <td></td>
-        <th id="titvuelto" class="text-center">Vuelto</th>
-        <td>
+        <th id="titvuelto" class="text-center ftb">Vuelto</th>
+        <td class="ftb">
             <input type="text" class="panel-info form-control sinb fina text-center" value="0.00" id="vuelto" placeholder="" readonly="readonly" />
             <span id="spanvuelto" class="text-danger text-center" style="display: block"></span>
         </td>
@@ -132,7 +132,7 @@
 <table class="table table-condensed  table-bordered">
 
     <thead>
-    <tr class="text-right">
+    <tr class="text-right gradcelestecla detalles" >
         <th class="text-center" style="width: 40%">
             Observaciones
         </th>
@@ -141,7 +141,7 @@
     </thead>
     <tbody>
     <tr>
-        <td>
+        <td class="ftb">
             <textarea type="text" maxlength="140" class="panel-info form-control fina" id="comments"  placeholder=""></textarea>
         </td>
        
@@ -445,10 +445,10 @@
                 $.each(orderItems, function(i, val) {
                     var $row = $('<tr class="elim"></tr>');
 
-                    $row.append($('<td><input class="panel-info form-control sinb fina" readonly="readonly" maxlength="140" id="descz" Name="' + val.IdProduct + '"  value="' + val.LineDescription + '"></td>'));
-                    $row.append($('<td><input type="number" class="panel-info form-control sinbedit fina text-center"  id="quantityz" maxlength="10" oninput="valqp(this);actlinetot(this)" onchange="valqp(this);actlinetot(this)" value="' + val.LineQuantity + '"><span class="text-danger"></span></td>'));
-                    $row.append($('<td><input type="number" class="panel-info form-control sinbedit fina text-center" id="pricez" maxlength="10" oninput="valqp(this);actlinetot(this)" onchange="valqp(this);actlinetot(this)" value="' + val.LinePrice + '"><span class="text-danger"></span></td>'));
-                    $row.append($('<td><input type="number" class="panel-info form-control sinb fina text-center" id="totalz" readonly="readonly" maxlength="10" value="' + val.LineTotal + '"><span class="text-danger"></span></td>'));
+                    $row.append($('<td class="ftb"><input class="panel-info form-control sinb fina" readonly="readonly" maxlength="140" id="descz" Name="' + val.IdProduct + '"  value="' + val.LineDescription + '"></td>'));
+                    $row.append($('<td class="ftb"><input type="number" class="panel-info form-control sinbedit fina text-center"  id="quantityz" maxlength="10" oninput="valqp(this);actlinetot(this)" onchange="valqp(this);actlinetot(this)" value="' + val.LineQuantity + '"><span class="text-danger"></span></td>'));
+                    $row.append($('<td class="ftb"><input type="number" class="panel-info form-control sinbedit fina text-center" id="pricez" maxlength="10" oninput="valqp(this);actlinetot(this)" onchange="valqp(this);actlinetot(this)" value="' + val.LinePrice + '"><span class="text-danger"></span></td>'));
+                    $row.append($('<td class="ftb"><input type="number" class="panel-info form-control sinb fina text-center" id="totalz" readonly="readonly" maxlength="10" value="' + val.LineTotal + '"><span class="text-danger"></span></td>'));
 
                     var $remove = $('<a style="color:red; width: 37px; text-align: center;vertical-align: -webkit-baseline-middle;"  onclick="borrarfila(this)"><span class="glyphicon glyphicon-remove"></span></a>');
 

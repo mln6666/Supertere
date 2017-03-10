@@ -70,3 +70,11 @@
     background: -webkit-linear-gradient(top, rgba(118,168,207,1) 0%, rgba(242,242,242,1) 0%, rgba(118,168,207,1) 100%);
    
 }
+        .full {
+            background-size: cover !important;
+        }
+        .ftb{background: whitesmoke !important}
+        .ftot{background: khaki !important}
+        .tittot{  font-size: medium !important;
+            font-weight: bold !important;
+          color: #1d2121 !important;}
