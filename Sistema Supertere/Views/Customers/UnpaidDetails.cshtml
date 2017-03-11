@@ -129,5 +129,28 @@
 <div class="text-center hidden-print">
     <a href="@Url.Action("Index", "Sales")" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> &nbsp; Volver</a>
     <a onclick="print()" class="btn btn-success dialog-window2 chicle">Imprimir</a>
+
+
+    <a onclick="pay()" class="btn btn-success dialog-window2 chicle">Saldar Cta.</a>
+
+
 </div>
 
+
+@section Scripts{
+    <script>
+        function pay() {
+
+            var url = '@Url.Action("Pay", "Customers",new {id =Model.IdCustomer})';
+            window.location.href = url;
+
+
+            }
+
+
+
+    </script>
+
+
+
+}

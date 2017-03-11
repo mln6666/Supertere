@@ -46,6 +46,50 @@ namespace Sistema_Supertere.Controllers
 
             return View(clist);
         }
+        //[HttpPost]
+        //public JsonResult Pay(Customer cus)
+        //{
+        //    //CustomerName contiene el id del cliente
+        //    bool status = false;
+
+        //    Sale sale = new Sale();
+
+
+
+        //    Customer ncus = db.Customers.Find(cus.IdCustomer);
+        //    ncus.Comments = "";
+        //    db.Entry(ncus).State = EntityState.Modified;
+        //    db.SaveChanges();
+
+        //    foreach (var s in cus.Sales)
+        //    {
+        //        s.SaleState = SaleState.CuentaFin;
+        //        db.Entry(s).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //    }
+
+        //        status = true;
+
+        //    return new JsonResult { Data = new { status = status } };
+        //}
+
+        public ActionResult Pay(int id)
+        {
+            Customer ncus = db.Customers.Find(id);
+            ncus.Comments = "";
+            db.Entry(ncus).State = EntityState.Modified;
+            db.SaveChanges();
+
+            foreach (var s in ncus.Sales.ToList().FindAll(s=>s.SaleState==SaleState.Cuenta))
+            {
+                s.SaleState = SaleState.CuentaFin;
+                db.Entry(s).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Unpaid");
+        }
+
         public ActionResult UnpaidDetails(int? id)
         {
             if (id == null)
