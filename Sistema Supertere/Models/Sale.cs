@@ -15,23 +15,10 @@ namespace Sistema_Supertere.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = false)]
         public DateTime SaleDate { get; set; }
-
-        [Display(Name = "Dirección")]
-        public string SaleAddress { get; set; }
-
-        [Display(Name = "Descuento")]
-        public int? Discount { get; set; }
+     
 
         [Display(Name = "Obs.")]
         public string Comments { get; set; }
-
-        [Display(Name = "Total Dev")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public decimal? ReturnsTotal { get; set; }
-
-        [Display(Name = "Total Lineas")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public decimal? LinesTotal { get; set; }
 
         [Display(Name = "Subtotal")]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]

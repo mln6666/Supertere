@@ -40,7 +40,6 @@ namespace Sistema_Supertere.Models
 
         public bool ProductState { get; set; }
 
-        public string Image { get; set; }
 
         public int idCategory { get; set; } //Clave Foránea de Category
 

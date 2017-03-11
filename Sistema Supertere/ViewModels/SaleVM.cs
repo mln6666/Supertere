@@ -12,19 +12,9 @@ namespace Sistema_Supertere.ViewModels
 
         public string CustomerName { get; set; }
 
-        public string CustomerAddress { get; set; }
-
-        public string CuitCuil { get; set; }
-
-        public string SaleAddress { get; set; }
-
         public DateTime SaleDate { get; set; }
 
         public List<SaleLine> SaleLines { get; set; }
-
-        public decimal? ReturnsTotal { get; set; }
-
-        public decimal? LinesTotal { get; set; }
 
         public decimal SaleTotal { get; set; }
 

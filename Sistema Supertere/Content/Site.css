@@ -83,3 +83,9 @@
     border: 1px solid rgba(0, 21, 43, 0.45);}
 .table-bordered {border-top: 1px solid rgba(0, 21, 43, 0.45);}
     .sinborde{border: none!important}
+
+    .noseve{display: none}
+    table{ margin-top: 5px!important;
+           margin-bottom: 5px!important;
+    }
+    .fnew{ background: powderblue !important;}

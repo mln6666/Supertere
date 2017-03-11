@@ -3,6 +3,9 @@
     ViewBag.Title = "NewSale";
 }
 <style>.select2{width: 100%!important;}
+ .active{ color: #ffffff!important;
+  background-color: #0e80e5!important;
+  border-color: #0d7bdc!important;}
     </style>
 
 
@@ -14,26 +17,38 @@
 <table class="table table-condensed table-bordered" style="table-layout: fixed">
     <thead>
         <tr class="text-center gradcelesteosc cabecera">
-            <th class="text-center" style="width: 20%">
+            <th class="text-center"style="width: auto" >
                 Tipo
             </th>
-            <th class="text-center">
+            <th class="text-center noseve">
                 Cliente
             </th>
-            <th class="text-center">
+            <th class="text-center" style="width: auto">
                 Fecha
             </th>
            
         </tr>
     </thead>
     <tbody>
-    <td class="text-center ftb"><select class="form-control text-right" id="salestate">
-    <option value="0">Efectivo</option>
-    <option value="1">Cta. Corriente</option>
-    <option value="3">Tarjeta</option>
-</select>
-    </td>
     <td class="text-center ftb">
+        @*<select class="form-control text-right" id="salestate">
+            <option value="0">Efectivo</option>
+            <option value="1">Cta. Corriente</option>
+            <option value="3">Tarjeta</option>
+        </select>*@
+        <div class="btn-group btn-group-justified" data-toggle="buttons" style="display: inline-block">
+            <label class="btn btn-default btn-xs active activo" value="0" onclick="acttipo(0)">
+                <input id="buttonsType" type="radio" name="options" value="0" onclick="acttipo(0)" autocomplete="off" checked>Efec.
+            </label>
+            <label class="btn btn-default btn-xs" value="1" onclick="acttipo(1)">
+                <input type="radio" name="options" value="1" onclick="acttipo(1)" autocomplete="off">Tarj.
+            </label>
+            <label class="btn btn-default btn-xs" value="2" onclick="acttipo(2)">
+                <input type="radio" name="options" value="2"onclick="acttipo(2)" autocomplete="off">Cta.
+            </label>
+        </div>
+    </td>
+    <td class="text-center noseve ftb">
         <select id="customername">
             <option></option>
             @foreach (var item in ViewBag.Customers)
@@ -72,7 +87,7 @@
     </tr>
     </thead>
     <tbody id="last">
-    <td class="ftb">
+    <td class="ftb fnew">
         <select class="js-example-basic-single sinbedit fina" style="width: 100%" id="linedescription" onchange="javacript: var valor = (this.options[selectedIndex].text).split('|')[0]; document.getElementById('shadow').value = valor; getprice(); fquantity();">
             <option></option>
             @foreach (var item in ViewBag.Products)
@@ -85,18 +100,18 @@
         <input type="hidden" id="shadow" value="">
     </td>
    
-    <td class="ftb">
+    <td class="ftb fnew">
         <input type="number" min="0" max="9999999999" class="panel-info form-control  fina text-center" value="1" id="linequantity" onFocus="this.select()" onchange="totallinea(); valqp(this);" oninput="totallinea();valqp(this)"onkeypress="solonumerosptocoma();" />
         <span id="spanlinequantity" class="text-danger" style="display: block"></span>
 
     </td>
-    <td class="ftb">
+    <td class="ftb fnew">
         <input type="number" min="0" max="9999999999" class="panel-info form-control  fina text-center" id="lineprice" onFocus="this.select()" onchange="totallinea(); valqp(this);" oninput="totallinea(); valqp(this);"onkeypress="solonumerosptocoma();" />
         <span id="spanlineprice" class="text-danger" style="display: block"></span>
 
     </td>
-    <td class="ftb">
-        <input type="text" class="panel-default text-center form-control new2 fina" value="0.00" id="linetotal" readonly="readonly" style="font-weight: bold"/>
+    <td class="ftb fnew">
+        <input type="text" class="panel-default text-center form-control fina" value="0.00" id="linetotal" readonly="readonly" style="font-weight: bold"/>
         <span id="spanlinetotal" class="text-danger" style="display: block"></span>
 
     </td>
@@ -181,8 +196,15 @@
             var before = str.split('|')[0];
             return before;
         }
-
-        $(document).ready(function() {
+        function acttipo(x) {
+            if (x == 2) {
+                $(".noseve").show("slow");
+            } else {
+                $(".noseve").hide("slow"); }
+            tipo = x;
+        }
+        $(document).ready(function () {
+            tipo = 0;
             orderItems = [];
             verifproductos = [];
             totgral = [];
@@ -395,7 +417,7 @@
                                 SaleDate: $('#saledate').val().trim(),
                                 SaleTotal: $('#saletotal').val().trim(),
                                 Comments: $('#comments').val().trim(),
-                                SaleState: $('#salestate').val().trim(),
+                                SaleState:tipo,
                                 SaleLines: orderItems
                             }
 

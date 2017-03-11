@@ -17,15 +17,9 @@ namespace Sistema_Supertere.Models
 
         public decimal LinePrice { get; set; }
 
-        public decimal LineDiscount { get; set; }
-
         public decimal LineQuantity { get; set; }
 
         public decimal LineTotal { get; set; }
-
-        public decimal? Return {get; set; }
-
-        public decimal LineTotalReturn { get; set; }
 
         public int IdSale { get; set; }
 

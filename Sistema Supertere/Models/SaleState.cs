@@ -11,11 +11,12 @@ namespace Sistema_Supertere.Models
     {
         [Display(Name = "Efectivo")]
         Efectivo = 0,
-
         [Display(Name = "Cta. Corriente")]
         Cuenta = 1,
         [Display(Name = "Tarjeta")]
-        Tarjeta = 2
+        Tarjeta = 2,
+        [Display(Name = "Cta. Cte. Saldada")]
+        CuentaFin = 3
 
 
     }

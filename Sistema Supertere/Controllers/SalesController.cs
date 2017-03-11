@@ -59,7 +59,6 @@ namespace Sistema_Supertere.Controllers
         {
             //CustomerName contiene el id del cliente
             bool status = false;
-            bool final = false;
 
 
             Sale sale = new Sale();
@@ -70,21 +69,29 @@ namespace Sistema_Supertere.Controllers
 
             if (ModelState.IsValid)
             {
-                if (O.SaleState=="0") { sale.SaleState = SaleState.Efectivo; } else { if (O.SaleState == "1") { sale.SaleState = SaleState.Tarjeta;} }
+                if (O.SaleState=="0") { sale.SaleState = SaleState.Efectivo; }
+                if (O.SaleState == "1") { sale.SaleState = SaleState.Tarjeta;}
+                if (O.SaleState == "2") { sale.SaleState = SaleState.Cuenta; }
+
                 bill.SaleTotal = O.SaleTotal;
                 bill.Comments = O.Comments;
                 bill.SaleDate = O.SaleDate;
-                bill.LinesTotal = O.SaleTotal;
-                bill.IdCustomer = cusid;
+                if (O.SaleState == "2")
+                {
+                    bill.IdCustomer = cusid;
+                }
                 db.Bills.Add(bill);
                 db.SaveChanges();
 
                 sale.SaleDate = O.SaleDate;
                 sale.Comments = O.Comments;
                 sale.SaleTotal = O.SaleTotal;
-                sale.LinesTotal = O.SaleTotal;
+              
                 sale.IdBill = bill.IdBill;
-                sale.IdCustomer = cusid;
+                if (O.SaleState == "2")
+                {
+                    sale.IdCustomer = cusid;
+                }
 
                 db.Sales.Add(sale);
                 db.SaveChanges();

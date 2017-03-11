@@ -41,9 +41,7 @@
         <th>
             @Html.DisplayNameFor(model => model.ProductState)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
+      
         <th></th>
     </tr>
 
@@ -79,9 +77,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.ProductState)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Image)
-        </td>
+  
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.IdProduct }) |
             @Html.ActionLink("Details", "Details", new { id=item.IdProduct }) |
