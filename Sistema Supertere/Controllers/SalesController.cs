@@ -19,8 +19,8 @@ namespace Sistema_Supertere.Controllers
         // GET: Sales
         public ActionResult Index()
         {
-            var sales = db.Sales.Include(s => s.Bill).Include(s => s.Customer);
-            return View(sales.ToList());
+            var sales = db.Sales.ToList();
+            return View(sales);
         }
 
         // GET: Sales/Details/5
@@ -62,9 +62,7 @@ namespace Sistema_Supertere.Controllers
 
 
             Sale sale = new Sale();
-            Bill bill = new Bill();
 
-            var cusid = Int32.Parse(O.CustomerName);
 
 
             if (ModelState.IsValid)
@@ -72,48 +70,29 @@ namespace Sistema_Supertere.Controllers
                 if (O.SaleState=="0") { sale.SaleState = SaleState.Efectivo; }
                 if (O.SaleState == "1") { sale.SaleState = SaleState.Tarjeta;}
                 if (O.SaleState == "2") { sale.SaleState = SaleState.Cuenta; }
-
-                bill.SaleTotal = O.SaleTotal;
-                bill.Comments = O.Comments;
-                bill.SaleDate = O.SaleDate;
-                if (O.SaleState == "2")
-                {
-                    bill.IdCustomer = cusid;
-                }
-                db.Bills.Add(bill);
-                db.SaveChanges();
+              
 
                 sale.SaleDate = O.SaleDate;
                 sale.Comments = O.Comments;
                 sale.SaleTotal = O.SaleTotal;
               
-                sale.IdBill = bill.IdBill;
                 if (O.SaleState == "2")
                 {
-                    sale.IdCustomer = cusid;
-                }
+                    sale.IdCustomer = Int32.Parse(O.CustomerName);
 
+                }
                 db.Sales.Add(sale);
                 db.SaveChanges();
+               
 
                 foreach (var i in O.SaleLines)
                 {
-                    BillLine billline = new BillLine();
-                    billline.IdProduct = i.IdProduct;
-                    billline.LinePrice = i.LinePrice;
-                    billline.LineQuantity = i.LineQuantity;
-                    billline.LineTotal = i.LineTotal;
-                    billline.IdBill = bill.IdBill;
-                    db.BillLines.Add(billline);
-                    db.SaveChanges();
-
                     SaleLine saleline = new SaleLine();
                     saleline.IdProduct = i.IdProduct;
                     saleline.LinePrice = i.LinePrice;
                     saleline.LineQuantity = i.LineQuantity;
                     saleline.LineTotal = i.LineTotal;
                     saleline.IdSale = sale.IdSale;
-
                     db.SaleLines.Add(saleline);
                     db.SaveChanges();
 
@@ -148,7 +127,6 @@ namespace Sistema_Supertere.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IdBill = new SelectList(db.Bills, "IdBill", "SaleAddress", sale.IdBill);
             ViewBag.IdCustomer = new SelectList(db.Customers, "IdCustomer", "CustomerName", sale.IdCustomer);
             return View(sale);
         }
@@ -166,7 +144,6 @@ namespace Sistema_Supertere.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdBill = new SelectList(db.Bills, "IdBill", "SaleAddress", sale.IdBill);
             ViewBag.IdCustomer = new SelectList(db.Customers, "IdCustomer", "CustomerName", sale.IdCustomer);
             return View(sale);
         }

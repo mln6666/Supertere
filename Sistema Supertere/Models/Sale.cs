@@ -32,10 +32,6 @@ namespace Sistema_Supertere.Models
 
         public virtual Customer Customer { get; set; }
 
-        public int? IdBill { get; set; } //Clave Foránea de Cliente (Customer)
-
-        public virtual Bill Bill { get; set; }
-
         public virtual ICollection<SaleLine> SaleLines { get; set; }
 
         public virtual SaleState SaleState { get; set; }

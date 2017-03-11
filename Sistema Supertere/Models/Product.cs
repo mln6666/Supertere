@@ -56,7 +56,6 @@ namespace Sistema_Supertere.Models
 
         public virtual ICollection<ProductProvider> Providers { get; set; }
 
-        public virtual ICollection<BillLine> BillLines { get; set; }
 
 
     }

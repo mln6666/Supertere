@@ -23,10 +23,11 @@ namespace Sistema_Supertere.Models
 
         public string CustomerEmail { get; set; }
 
-        public string CuitCuil { get; set; }
+        public string Comments { get; set; }
+
+        public decimal? Unpaidtotal { get; set; }
 
         public virtual ICollection<Sale> Sales { get; set; }
 
-        public virtual ICollection<Bill> Bills { get; set; }
     }
 }

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Sistema_Supertere.Models.Customer>
+
+@{
+    ViewBag.Title = "Unpaid";
+}
+
+<h2>Unpaid</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </th>
+        <th>Deuda</th>
+        <th></th>
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unpaidtotal)
+            </td>
+            <td>
+                @Html.ActionLink("UnpaidDetails", "UnpaidDetails", new { id = item.IdCustomer})
+        </td>
+        </tr>
+    }
+
+</table>

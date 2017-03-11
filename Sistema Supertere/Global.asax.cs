@@ -28,6 +28,25 @@ namespace Sistema_Supertere
         {
 
             TereContext dc = new TereContext();
+            if (dc.Customers == null | dc.Customers.Count() == 0)
+            {
+                Customer t1 = new Customer();
+                Customer t2 = new Customer();
+                Customer t3 = new Customer();
+                Customer t4 = new Customer();
+                Customer t5 = new Customer();
+                t1.CustomerName = "Cliente 1";
+                t2.CustomerName = "Cliente 2";
+                t3.CustomerName = "Cliente 3";
+                t4.CustomerName = "Cliente 4";
+                t5.CustomerName = "Cliente 5";
+                dc.Customers.Add(t1);
+                dc.Customers.Add(t2);
+                dc.Customers.Add(t3);
+                dc.Customers.Add(t4);
+                dc.Customers.Add(t5);
+                dc.SaveChanges();
+            }
 
             if (dc.Trademarks == null | dc.Trademarks.Count() == 0)
             {

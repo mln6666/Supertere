@@ -31,7 +31,7 @@
     </tr>
 
 @foreach (var item in Model) {
-    if (item.SaleState != SaleState.Cuenta) {
+    //if (item.SaleState != SaleState.Cuenta) {
         <tr>
 
             <td>
@@ -55,7 +55,7 @@
                 @Html.ActionLink("Delete", "Delete", new {id = item.IdSale})
             </td>
         </tr>
-    }
+    
 }
 
 </table>

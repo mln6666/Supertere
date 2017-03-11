@@ -210,8 +210,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Bill.cs" />
-    <Compile Include="Models\BillLine.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -819,6 +817,8 @@
     <Content Include="Views\Purchases\Edit.cshtml" />
     <Content Include="Views\Purchases\Index.cshtml" />
     <Content Include="Views\Sales\NewSale.cshtml" />
+    <Content Include="Views\Customers\Unpaid.cshtml" />
+    <Content Include="Views\Customers\UnpaidDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

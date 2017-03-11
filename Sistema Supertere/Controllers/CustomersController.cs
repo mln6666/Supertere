@@ -20,6 +20,63 @@ namespace Sistema_Supertere.Controllers
         {
             return View(db.Customers.ToList());
         }
+        public ActionResult Unpaid()
+        {
+            var clist = db.Customers.ToList().FindAll(c=>c.Sales.ToList().Any(s=>s.SaleState==SaleState.Cuenta));
+
+            foreach (var item in clist)
+            {
+                item.Unpaidtotal = 0;
+                foreach (var sale in item.Sales)
+                {
+                    if (sale.SaleState == SaleState.Cuenta)
+                    {
+                        item.Unpaidtotal += sale.SaleTotal;
+                    }
+                    else
+                    {
+                        if (sale.SaleState == SaleState.Efectivo | sale.SaleState==SaleState.Tarjeta)
+                        {
+                            item.Sales.Remove(sale);
+                        }
+                    }
+                }
+                
+            }
+
+            return View(clist);
+        }
+        public ActionResult UnpaidDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Customer customer = db.Customers.Find(id);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            customer.Unpaidtotal = 0;
+            foreach (var sale in customer.Sales)
+            {
+                if (sale.SaleState == SaleState.Cuenta)
+                {
+                    customer.Unpaidtotal += sale.SaleTotal;
+                }
+                else
+                {
+                    if (sale.SaleState == SaleState.Efectivo | sale.SaleState == SaleState.Tarjeta)
+                    {
+                        customer.Sales.Remove(sale);
+                    }
+                }
+            }
+
+
+            return View(customer);
+        }
+
 
         // GET: Customers/Details/5
         public ActionResult Details(int? id)

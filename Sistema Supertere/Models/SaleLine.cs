@@ -25,8 +25,5 @@ namespace Sistema_Supertere.Models
 
         public virtual Sale Sale { get; set; }
 
-
-
-
     }
 }

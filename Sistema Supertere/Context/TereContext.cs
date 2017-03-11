@@ -24,14 +24,10 @@ namespace Sistema_Supertere.Context
         public System.Data.Entity.DbSet<Sistema_Supertere.Models.Provider> Providers { get; set; }
 
         public System.Data.Entity.DbSet<Sistema_Supertere.Models.Sale> Sales { get; set; }
-        public System.Data.Entity.DbSet<Sistema_Supertere.Models.Bill> Bills { get; set; }
-
 
         public System.Data.Entity.DbSet<Sistema_Supertere.Models.Purchase> Purchases { get; set; }
 
         public System.Data.Entity.DbSet<Sistema_Supertere.Models.SaleLine> SaleLines { get; set; }
-        public System.Data.Entity.DbSet<Sistema_Supertere.Models.BillLine> BillLines { get; set; }
-
 
         public System.Data.Entity.DbSet<Sistema_Supertere.Models.PurchaseLine> PurchaseLines { get; set; }
 
