@@ -3,57 +3,60 @@
     ViewBag.Title = "UnpaidDetails";
 }
 
-<h2>UnpaidDetails</h2>
+<h2>Detalles de cuenta</h2>
 
-
-<table class="table table-condensed table-bordered">
+<table class="table table-condensed table-bordered" style="table-layout: fixed">
     <thead>
-        <tr class="text-center">
-           
-            <th class="text-center">
-                Cliente
+        <tr class="text-center gradcelesteosc cabecera">
+            <th class="text-center" style="width: auto">
+                Tipo
             </th>
-            <th class="text-center">
-                Fecha
+          
+                <th class="text-center">
+                    Cliente
+                </th> 
+
+            <th class="text-center" style="width: auto">
+                Fecha Consulta
             </th>
 
         </tr>
     </thead>
     <tbody>
-  
-    <td class="text-center">
-        @Html.DisplayNameFor(model => model.CustomerName)
-
+    <td class="text-center ftb">
+        Cta. Cte.
     </td>
-    <td class="text-center">
-        @DateTime.Now.ToString()
+        <td class="text-center ftb">
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </td>
+    <td class="text-center ftb">
+        @DateTime.Now.ToShortDateString();
     </td>
     </tbody>
-
 </table>
 
-
-<legend style="margin-bottom: 2px;">
-    Listado Productos
-</legend>
 <table id="tablaprod" class="table table-condensed table-bordered" style="table-layout: fixed">
-    <thead class="tableStyle">
-        <tr class="text-center">
-            <th class="text-left" style="width: 40%">
-                Producto
-            </th>
+    <thead>
+    <tr class="text-center gradcelestecla detalles ">
+        <th class="text-center"style="width: 9%">
+            Fecha
+        </th>
 
-            <th class="text-center">
-                Cantidad
-            </th>
-            <th class="text-center">
-                P. Unit.
-            </th>
-            <th class="text-center">
-                Total($)
-            </th>
+        <th class="text-center" style="width: 40%">
+            Descripción
+        </th>
 
-        </tr>
+        <th class="text-center" style="width: 17%">
+            Cantidad
+        </th>
+        <th class="text-center" style="width: 17%">
+            P. Unit.
+        </th>
+        <th class="text-center" style="width: 17%">
+            Importe($)
+        </th>
+
+    </tr>
     </thead>
     <tbody id="last">
         @foreach (var item in Model.Sales)
@@ -61,48 +64,50 @@
             foreach (var line in item.SaleLines)
             {
                 <tr style="background-color: white">
-
-                    <td>
+                    <td class="ftb text-center" style="overflow-wrap: break-word">
+                        @item.SaleDate.ToShortDateString()
+                    </td>
+                    <td class="ftb">
                         @Html.DisplayFor(modelItem => line.Product.Trademark.TrademarkName) - @Html.DisplayFor(modelItem => line.Product.ProductDescription)
                     </td>
-
-                    <td class="text-center">
+                    <td class="ftb text-center">
                         @Html.DisplayFor(modelItem => line.LineQuantity)
                     </td>
-                    <td class="text-center">
+                    <td class="ftb text-center">
                         @Html.DisplayFor(modelItem => line.LinePrice)
                     </td>
-                    <td class="text-center">
+                    <td class="ftb text-center negrita">
                         @Html.DisplayFor(modelItem => line.LineTotal)
                     </td>
                 </tr>
-
             }
+           
         }
-
+        <tr id="trtot">
+            <td class="sinborde"></td>
+            <td class="sinborde"></td>
+            <td class="sinborde"></td>
+            <th class="text-center gradcelesteosc tittot">TOTAL DEUDA</th>
+            <td class="ftot negrita text-center">
+                @Html.DisplayFor(model => model.Unpaidtotal)
+            </td>
+            <td class="sinborde"></td>
+        </tr>
     </tbody>
-
-
 </table>
 
-<legend style="margin-bottom: 2px;">
-    Resumen
-</legend>
 <table class="table table-condensed  table-bordered">
-
-    <thead class="">
-        <tr class="text-right">
-            <td class="text-center">
+    <thead>
+        <tr class="text-right gradcelestecla detalles">
+            <th class="text-left" style="width: 40%">
                 Observaciones
-            </td>
-            <td class="text-center">
-                Total
-            </td>
+            </th>
+
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>
+            <td class="ftb">
                 @if (Model.Comments == "" | Model.Comments == null)
             {<text>-</text>}
             else
@@ -110,15 +115,17 @@
                     @Html.DisplayFor(model => model.Comments)
                 }
             </td>
-            <td class="text-center">
-                @Html.DisplayFor(model => model.Unpaidtotal)
-            </td>
-         
+
         </tr>
 
     </tbody>
 
 </table>
+
+
+
+
+
 <div class="text-center hidden-print">
     <a href="@Url.Action("Index", "Sales")" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> &nbsp; Volver</a>
     <a onclick="print()" class="btn btn-success dialog-window2 chicle">Imprimir</a>
