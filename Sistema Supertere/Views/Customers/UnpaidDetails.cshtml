@@ -3,7 +3,8 @@
     ViewBag.Title = "UnpaidDetails";
 }
 
-<h2>Detalles de cuenta</h2>
+<h3 class="text-center">Detalles de cuenta</h3>
+<hr/>
 
 <table class="table table-condensed table-bordered" style="table-layout: fixed">
     <thead>
@@ -26,11 +27,11 @@
     <td class="text-center ftb">
         Cta. Cte.
     </td>
-        <td class="text-center ftb">
-            @Html.DisplayNameFor(model => model.CustomerName)
+        <td id="cli" class="text-center ftb">
+            @Html.DisplayFor(model => model.CustomerName)
         </td>
     <td class="text-center ftb">
-        @DateTime.Now.ToShortDateString();
+        @DateTime.Now.ToShortDateString()
     </td>
     </tbody>
 </table>
@@ -83,20 +84,44 @@
             }
            
         }
-        <tr id="trtot">
-            <td class="sinborde"></td>
-            <td class="sinborde"></td>
-            <td class="sinborde"></td>
-            <th class="text-center gradcelesteosc tittot">TOTAL DEUDA</th>
-            <td class="ftot negrita text-center">
-                @Html.DisplayFor(model => model.Unpaidtotal)
-            </td>
-            <td class="sinborde"></td>
-        </tr>
+    <tr id="trtot">
+        <td class="sinborde"></td>
+        <td class="sinborde"></td>
+        <td class="sinborde"></td>
+        <th class="text-center gradcelesteosc tittot">TOTAL DEUDA</th>
+        <td class="ftot negrita text-center">
+            @Html.DisplayFor(model => model.Unpaidtotal)
+        </td>
+        <td class="sinborde"></td>
+    </tr>
+    <tr>
+        <td class="sinborde"></td>
+
+        <td class="sinborde"></td>
+        <td class="sinborde"></td>
+        <th class="text-center ftb">Entrego</th>
+        <td class="ftb">
+            <input type="number" min="0" max="9999999999" class="panel-info form-control fina text-center" id="entrega" onFocus="this.select()" oninput="calcvuelto()" onchange="calcvuelto()" onkeypress="solonumerosptocoma();" value="0.00"></input>
+
+        </td>
+        <td class="sinborde"></td>
+    </tr>
+    <tr>
+        <td class="sinborde"></td>
+
+        <td class="sinborde"></td>
+        <td class="sinborde"></td>
+        <th id="titvuelto" class="text-center ftb">Vuelto</th>
+        <td class="ftb">
+            <input type="text" class="panel-info form-control sinb fina text-center" value="0.00" id="vuelto" placeholder="" readonly="readonly"/>
+            <span id="spanvuelto" class="text-danger text-center" style="display: block"></span>
+        </td>
+        <td class="sinborde"></td>
+    </tr>
     </tbody>
 </table>
 
-<table class="table table-condensed  table-bordered">
+@*<table class="table table-condensed  table-bordered">
     <thead>
         <tr class="text-right gradcelestecla detalles">
             <th class="text-left" style="width: 40%">
@@ -120,15 +145,15 @@
 
     </tbody>
 
-</table>
+</table>*@
 
 
 
 
 
 <div class="text-center hidden-print">
-    <a href="@Url.Action("Index", "Sales")" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> &nbsp; Volver</a>
-    <a onclick="print()" class="btn btn-success dialog-window2 chicle">Imprimir</a>
+    <a href="@Url.Action("Unpaid", "Customers")" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> &nbsp; Volver</a>
+    <a onclick="print()" class="btn btn-warning dialog-window2 chicle">Imprimir</a>
 
 
     <a onclick="pay()" class="btn btn-success dialog-window2 chicle">Saldar Cta.</a>
@@ -140,13 +165,48 @@
 @section Scripts{
     <script>
         function pay() {
+            bootbox.confirm({
+                message: "Está por anular la deuda de <b>" + $("#cli").html() + "</b> , ¿Desea continuar?",
+                buttons: {
+                    confirm: {
+                        label: 'Aceptar',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'Cancelar',
+                        className: 'btn-default'
+                    }
+                },
+                callback: function (result1) {
 
-            var url = '@Url.Action("Pay", "Customers",new {id =Model.IdCustomer})';
-            window.location.href = url;
+                    if (result1) {
+                        var url = '@Url.Action("Pay", "Customers",new {id =Model.IdCustomer})';
+                        window.location.href = url;
 
+                    }
+                }
+            });
+         
+        }
+
+        function calcvuelto() {
+            var entrega = parseFloat($('#entrega').val());
+            var tot = parseFloat(@Model.Unpaidtotal);
+            var vuelto = entrega - tot;
+            document.getElementById("vuelto").value = vuelto.toFixed(2);
+            if (entrega >= tot) {
+                $("#titvuelto").html('Vuelto');
+                $("#titvuelto").removeClass('text-danger');
+                $("#vuelto").removeClass('text-danger');
+                $("#titvuelto").addClass('text-success');
+            } else {
+                $("#titvuelto").html('Saldo');
+                $("#titvuelto").addClass('text-danger');
+                $("#vuelto").addClass('text-danger');
 
             }
 
+        }
 
 
     </script>

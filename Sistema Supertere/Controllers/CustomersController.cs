@@ -102,6 +102,7 @@ namespace Sistema_Supertere.Controllers
                 return HttpNotFound();
             }
             customer.Unpaidtotal = 0;
+            customer.Sales = customer.Sales.OrderBy(x => x.SaleDate).ToList();
             foreach (var sale in customer.Sales)
             {
                 if (sale.SaleState == SaleState.Cuenta)

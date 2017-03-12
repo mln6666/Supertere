@@ -505,8 +505,8 @@
                 olinedescriptions.push((this.value));
                 oids.push((this.name));
             });
-            $("input[id='quantityz']").map(function() { olineprices.push(parseFloat(this.value)) });
-            $("input[id='pricez']").map(function() { olinequantities.push(parseFloat(this.value)) });
+            $("input[id='quantityz']").map(function () { olinequantities.push(parseFloat(this.value)) });
+            $("input[id='pricez']").map(function () { olineprices.push(parseFloat(this.value)) });
             $("input[id='totalz']").map(function() { olinetotals.push(parseFloat(this.value)) });
 
             for (i = 0; i < olinedescriptions.length; i++) {
