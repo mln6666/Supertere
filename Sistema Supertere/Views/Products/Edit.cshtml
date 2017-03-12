@@ -4,32 +4,50 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h3>Editar Producto</h3>
+<hr />
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Products", null, FormMethod.Post, new { id = "editProd" }))
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Product</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.IdProduct)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ProductDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ProductDescription, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ProductDescription, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ProductDescription, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.ProductDescription, new {htmlAttributes = new {@class = "form-control", @onchange = "prodexistedit()"}})
+                @Html.ValidationMessageFor(model => model.ProductDescription, "", new {@class = "text-danger"})
+                <span id="spanproductdescription" class="text-danger"></span>
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdTrademark, "IdTrademark", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IdTrademark", null, htmlAttributes: new { @class = "form-control", @onchange = "prodexistedit()" })
+                @Html.ValidationMessageFor(model => model.IdTrademark, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.idCategory, "idCategory", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("idCategory", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.idCategory, "", new { @class = "text-danger" })
             </div>
         </div>
 
+       
         <div class="form-group">
             @Html.LabelFor(model => model.Barcode, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Barcode, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Barcode, new { htmlAttributes = new { @class = "form-control", @onchange = "bcexistedit()" } })
                 @Html.ValidationMessageFor(model => model.Barcode, "", new { @class = "text-danger" })
+                <span id="spanbarcode" class="text-danger"></span>
+
             </div>
         </div>
 
@@ -49,13 +67,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UploadDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UploadDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UploadDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    
 
         <div class="form-group">
             @Html.LabelFor(model => model.Stock, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -84,34 +96,83 @@
         </div>
 
      
-        <div class="form-group">
-            @Html.LabelFor(model => model.idCategory, "idCategory", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("idCategory", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.idCategory, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdTrademark, "IdTrademark", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdTrademark", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdTrademark, "", new { @class = "text-danger" })
-            </div>
-        </div>
+     
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Guardar cambios" class="btn btn-success" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("<<Listado", "Index")
 </div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function() {
+            ebarcode = 0;
+            eprod = 0;
+
+
+        });
+
+
+        function bcexistedit() {
+
+            var options = {};
+            options.url = '@Url.Action("ExBarcodeEdit", "Products")';
+            options.type = "GET";
+            options.data = { "bc": $("#Barcode").val(),"id":@Model.IdProduct };
+            options.dataType = "json";
+            options.success = function(data) {
+                if (data) {
+                    $('#spanbarcode').text("Cód. de barras existente");
+                    ebarcode = 1;
+                } else {
+                    $('#spanbarcode').text("");
+                    ebarcode = 0;
+                };
+
+            };
+            $.ajax(options);
+        }
+        function prodexistedit() {
+
+            var options = {};
+            options.url = '@Url.Action("ExProductEdit", "Products")';
+            options.type = "GET";
+            options.data = { "des": $("#ProductDescription").val(), "mar": $("#IdTrademark").val(),"id":@Model.IdProduct  };
+            options.dataType = "json";
+            options.success = function (data) {
+                if (data) {
+                    $('#spanproductdescription').text("Producto existente");
+                    eprod = 1;
+                } else {
+                    $('#spanproductdescription').text("");
+                    eprod = 0;
+                };
+
+            };
+            $.ajax(options);
+        }
+
+        $('#editProd').submit(function (e) {
+
+            var x = this;
+            e.preventDefault();
+
+            if (ebarcode!=1 & eprod!=1 ) {
+                        x.submit();
+                    }
+
+        });
+
+    </script>
 }
+
+

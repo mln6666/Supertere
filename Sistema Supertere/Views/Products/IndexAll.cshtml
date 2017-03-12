@@ -3,19 +3,19 @@
 @{
     ViewBag.Title = "Index";
 }
-<h3>Productos Activos</h3>
-<hr/>
 
+<h3>Todos los Productos</h3>
+<hr />
 <div style="display: flex">
     <a href="@Url.Action("Create", "Products")" class="btn-sm btn-success hvr-glow" style="margin-bottom: 5px;">Nuevo Producto</a>&nbsp;&nbsp;
 
-    <a href="@Url.Action("Index", "Products")" class="btn-sm btn-info active hvr-glow" style="margin-bottom: 5px;">Activos</a>&nbsp;&nbsp;
+    <a href="@Url.Action("Index", "Products")" class="btn-sm btn-default  hvr-glow" style="margin-bottom: 5px;">Activos</a>&nbsp;&nbsp;
 
 
     <a href="@Url.Action("IndexDeac", "Products")" class="btn-sm btn-default hvr-glow" style="margin-bottom: 5px;">No activos</a>&nbsp;&nbsp;
 
 
-    <a href="@Url.Action("IndexAll", "Products")" class="btn-sm btn-default hvr-glow" style="margin-bottom: 5px;">Todos</a>&nbsp;&nbsp;
+    <a href="@Url.Action("IndexAll", "Products")" class="btn-sm btn-info active hvr-glow" style="margin-bottom: 5px;">Todos</a>&nbsp;&nbsp;
 
 
 </div>
@@ -30,7 +30,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Category.CategoryName)
         </th>
-     
+
         <th>
             @Html.DisplayNameFor(model => model.Barcode)
         </th>
@@ -56,50 +56,51 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
 
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductDescription)
-        </td>
-    
-        <td>
-            @Html.DisplayFor(modelItem => item.Trademark.TrademarkName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category.CategoryName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Barcode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cost)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PublicPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UploadDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Stock)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Minimum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductState)
-        </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductDescription)
+            </td>
 
-        <td>
-            <a id="@("deac" + @item.IdProduct)" class="btn btn-warning btn-sm" onclick="deac(@item.IdProduct)">Desactivar</a>
+            <td>
+                @Html.DisplayFor(modelItem => item.Trademark.TrademarkName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Barcode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublicPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UploadDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Minimum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductState)
+            </td>
 
-            @Html.ActionLink("Edit", "Edit", new {id = item.IdProduct}) |
-            @Html.ActionLink("Details", "Details", new {id = item.IdProduct}) |
-            @Html.ActionLink("Delete", "Delete", new {id = item.IdProduct})
-        </td>
-    </tr>
-}
+            <td>
+                <a id="@("deac" + @item.IdProduct)" class="btn btn-warning btn-sm" onclick="deac(@item.IdProduct)">Desactivar</a>
+
+                @Html.ActionLink("Edit", "Edit", new { id = item.IdProduct }) |
+                @Html.ActionLink("Details", "Details", new { id = item.IdProduct }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.IdProduct })
+            </td>
+        </tr>
+    }
 
 </table>
 
@@ -107,7 +108,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-      
+
 
         function deac(x) {
 
@@ -128,7 +129,7 @@
             $.ajax(options);
         }
 
-      
+
 
     </script>
 }

@@ -11,7 +11,7 @@ namespace Sistema_Supertere.Models
         [Key]
         public int IdProduct { get; set; }
 
-        [Required(ErrorMessage = "Campo Obligatorio")]
+        [Required(ErrorMessage = "Requerido")]
         [Display(Name = "Descripción")]
         public string ProductDescription { get; set; }
       
@@ -22,6 +22,7 @@ namespace Sistema_Supertere.Models
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal? Cost { get; set; }
 
+        [Required(ErrorMessage = "Requerido")]
         [Display(Name = "P. Venta")]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal? PublicPrice { get; set; }
@@ -31,16 +32,17 @@ namespace Sistema_Supertere.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime? UploadDate { get; set; }
 
+        [Required(ErrorMessage = "Requerido")]
         public decimal? Stock { get; set; }
 
         //public decimal? ParcialStock { get; set; }
-
+        [Required(ErrorMessage = "Requerido")]
         [Display(Name = "Stock mínimo")]
         public decimal? Minimum { get; set; }
 
         public bool ProductState { get; set; }
 
-
+        [Required(ErrorMessage = "Requerido")]
         public int idCategory { get; set; } //Clave Foránea de Category
 
         public virtual Category Category { get; set; }

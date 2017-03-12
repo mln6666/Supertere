@@ -12,7 +12,7 @@ namespace Sistema_Supertere.Models
         public int IdCategory { get; set; }
 
         [Display(Name = "Rubro")]
-        [Required(ErrorMessage = "Campo Obligatorio")]
+        [Required(ErrorMessage = "Requerido")]
         public string CategoryName { get; set; }
 
         [DataType(DataType.MultilineText)]

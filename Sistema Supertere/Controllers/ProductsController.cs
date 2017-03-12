@@ -18,8 +18,18 @@ namespace Sistema_Supertere.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            var products = db.Products.Include(p => p.Category).Include(p => p.Trademark);
-            return View(products.ToList());
+            var products = db.Products.ToList().FindAll(x=>x.ProductState==true );
+            return View(products);
+        }
+        public ActionResult IndexDeac()
+        {
+            var products = db.Products.ToList().FindAll(x => x.ProductState == false);
+            return View(products);
+        }
+        public ActionResult IndexAll()
+        {
+            var products = db.Products.ToList();
+            return View(products);
         }
         public JsonResult ExBarcode(string bc)
         {
@@ -29,6 +39,32 @@ namespace Sistema_Supertere.Controllers
 
             return Json(existe, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult ExBarcodeEdit(string bc,int id)
+        {
+            //if (Trademark == "")
+            //    Trademark = "[Producto sin Marca]";
+            var existe = db.Products.ToList().Exists(a => a.Barcode == bc & a.IdProduct!=id);
+
+            return Json(existe, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ExProduct(string des,int mar)
+        {
+            //if (Trademark == "")
+            //    Trademark = "[Producto sin Marca]";
+            var existe = db.Products.ToList().Exists(a => a.ProductDescription == des & a.IdTrademark==mar);
+
+            return Json(existe, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ExProductEdit(string des, int mar,int id)
+        {
+            //if (Trademark == "")
+            //    Trademark = "[Producto sin Marca]";
+            var existe = db.Products.ToList().Exists(a => a.ProductDescription == des & a.IdTrademark == mar &a.IdProduct!=id);
+
+            return Json(existe, JsonRequestBehavior.AllowGet);
+        }
+
+
         public JsonResult Getproductdata(string pro)
         {
            
@@ -56,6 +92,36 @@ namespace Sistema_Supertere.Controllers
                 return HttpNotFound();
             }
             return View(product);
+        }
+
+    
+        [HttpPost]
+        public JsonResult Deactivate(int? id)
+        {
+            var status = false;
+            Product prod = new Product();
+            prod = db.Products.Find(id);
+
+            prod.ProductState = !prod.ProductState;
+            db.Entry(prod).State = EntityState.Modified;
+            db.SaveChanges();
+            status = true;
+            return Json(status, JsonRequestBehavior.AllowGet);
+
+        }
+        [HttpPost]
+        public JsonResult Activate(int? id)
+        {
+            var status = false;
+            Product prod = new Product();
+            prod = db.Products.Find(id);
+
+            prod.ProductState = !prod.ProductState;
+            db.Entry(prod).State = EntityState.Modified;
+            db.SaveChanges();
+            status = true;
+            return Json(status, JsonRequestBehavior.AllowGet);
+
         }
 
         // GET: Products/Create

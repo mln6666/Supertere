@@ -819,6 +819,8 @@
     <Content Include="Views\Sales\NewSale.cshtml" />
     <Content Include="Views\Customers\Unpaid.cshtml" />
     <Content Include="Views\Customers\UnpaidDetails.cshtml" />
+    <Content Include="Views\Products\IndexDeac.cshtml" />
+    <Content Include="Views\Products\IndexAll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

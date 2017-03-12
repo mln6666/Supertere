@@ -35,7 +35,22 @@ namespace Sistema_Supertere.Controllers
             }
             return View(trademark);
         }
+        public JsonResult ExTrademark(string des)
+        {
+            //if (Trademark == "")
+            //    Trademark = "[Producto sin Marca]";
+            var existe = db.Trademarks.ToList().Exists(a => a.TrademarkName == des);
 
+            return Json(existe, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ExTrademarkEdit(string des, int id)
+        {
+            //if (Trademark == "")
+            //    Trademark = "[Producto sin Marca]";
+            var existe = db.Trademarks.ToList().Exists(a => a.TrademarkName == des & a.IdTrademark!=id);
+
+            return Json(existe, JsonRequestBehavior.AllowGet);
+        }
         // GET: Trademarks/Create
         public ActionResult Create()
         {

@@ -42,7 +42,7 @@ namespace Sistema_Supertere.Controllers
         {
            
             ViewBag.Customers = db.Customers.ToList();
-            ViewBag.Products = db.Products.ToList();
+            ViewBag.Products = db.Products.ToList().FindAll(x=>x.ProductState==true);
             var nsale = 0;
             if (db.Sales != null & db.Sales.Count() != 0)
             {

@@ -4,22 +4,23 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h3>Nueva Marca</h3>
+<hr />
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Trademarks", null, FormMethod.Post, new { id = "createTM" }))
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Trademark</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.TrademarkName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TrademarkName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.TrademarkName, new { htmlAttributes = new { @class = "form-control", @onchange = "tmexist()" } })
                 @Html.ValidationMessageFor(model => model.TrademarkName, "", new { @class = "text-danger" })
+                <span id="spantrademarkname" class="text-danger"></span>
+
             </div>
         </div>
 
@@ -33,16 +34,57 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Guardar" class="btn btn-success" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("<<Listado", "Index")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            etm = 0;
+
+
+        });
+
+
+
+        function tmexist() {
+
+            var options = {};
+            options.url = '@Url.Action("ExTrademark", "Trademarks")';
+            options.type = "GET";
+            options.data = { "des": $("#TrademarkName").val() };
+            options.dataType = "json";
+            options.success = function (data) {
+                if (data) {
+                    $('#spantrademarkname').text("Marca existente");
+                    etm = 1;
+                } else {
+                    $('#spantrademarkname').text("");
+                    etm = 0;
+                };
+
+            };
+            $.ajax(options);
+        }
+
+        $('#createTM').submit(function (e) {
+
+            var x = this;
+            e.preventDefault();
+
+            if (etm != 1) {
+                x.submit();
+            }
+
+        });
+
+    </script>
 }

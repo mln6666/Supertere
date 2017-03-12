@@ -18,23 +18,24 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ProductDescription, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ProductDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ProductDescription, new { htmlAttributes = new { @class = "form-control", @onchange = "prodexist()" } })
                 @Html.ValidationMessageFor(model => model.ProductDescription, "", new { @class = "text-danger" })
+                <span id="spanproductdescription" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdTrademark, "Marca", htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.DropDownList("IdTrademark", null, htmlAttributes: new {@class = "form-control", @onchange = "prodexist()" })
+                @Html.ValidationMessageFor(model => model.IdTrademark, "", new {@class = "text-danger"})
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.idCategory, "Rubro", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("idCategory", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("idCategory", null, htmlAttributes: new { @class = "form-control"})
                 @Html.ValidationMessageFor(model => model.idCategory, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdTrademark, "Marca", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdTrademark", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdTrademark, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
@@ -49,7 +50,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Stock, htmlAttributes: new { @class = "control-label col-md-2"  })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Stock, new { htmlAttributes = new { @class = "form-control", Value = 1 } })
+                @Html.EditorFor(model => model.Stock, new { htmlAttributes = new { @class = "form-control"} })
                 @Html.ValidationMessageFor(model => model.Stock, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -57,7 +58,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Minimum, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Minimum, new { htmlAttributes = new { @class = "form-control", Value = 1 } })
+                @Html.EditorFor(model => model.Minimum, new { htmlAttributes = new { @class = "form-control"} })
                 @Html.ValidationMessageFor(model => model.Minimum, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -87,47 +88,76 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Guardar" class="btn btn-success" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("<<Listado", "Index")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-<script>
-      function bcexist() {
+    <script>
+        $(document).ready(function() {
+            ebarcode = 0;
+            eprod = 0;
 
-          if ($('#Barcode').val() != "") {
-              if ($('#Barcode').val().length != 13) { $('#spanbarcode').text("Debe ser de 13 caracteres."); } else {
-                  $('#spanbarcode').text("");
-                  var options = {};
-                  options.url = '@Url.Action("ExBarcode", "Products")';
-                  options.type = "GET";
-                  options.data = { "bc": $("#Barcode").val() };
-                  options.dataType = "json";
-                  options.success = function (data) {
-                      if (data) {
-                          $('#spanbarcode').text("Cód. de barras existente");
-                          IsValidItem = false;
-                      } else {
-                          $('#spanbarcode').text("");
-                          IsValidItem = true;
-                      };
 
-                  };
-                  $.ajax(options);
-              }
-               
+        });
+
+
+        function bcexist() {
+
+            var options = {};
+            options.url = '@Url.Action("ExBarcode", "Products")';
+            options.type = "GET";
+            options.data = { "bc": $("#Barcode").val() };
+            options.dataType = "json";
+            options.success = function(data) {
+                if (data) {
+                    $('#spanbarcode').text("Cód. de barras existente");
+                    ebarcode = 1;
                 } else {
-                IsValidItem = false;
-                }
+                    $('#spanbarcode').text("");
+                    ebarcode = 0;
+                };
 
-                }
+            };
+            $.ajax(options);
+        }
+        function prodexist() {
 
-</script>
+            var options = {};
+            options.url = '@Url.Action("ExProduct", "Products")';
+            options.type = "GET";
+            options.data = { "des": $("#ProductDescription").val(), "mar": $("#IdTrademark").val() };
+            options.dataType = "json";
+            options.success = function (data) {
+                if (data) {
+                    $('#spanproductdescription').text("Producto existente");
+                    eprod = 1;
+                } else {
+                    $('#spanproductdescription').text("");
+                    eprod = 0;
+                };
+
+            };
+            $.ajax(options);
+        }
+
+        $('#createProd').submit(function (e) {
+
+            var x = this;
+            e.preventDefault();
+
+            if (ebarcode!=1 & eprod!=1 ) {
+                        x.submit();
+                    }
+            
+        });
+
+    </script>
 }

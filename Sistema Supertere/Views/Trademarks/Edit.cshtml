@@ -7,7 +7,7 @@
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Trademarks", null, FormMethod.Post, new { id = "editTM" }))
 {
     @Html.AntiForgeryToken()
     
@@ -20,8 +20,10 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TrademarkName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TrademarkName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.TrademarkName, new { htmlAttributes = new { @class = "form-control", @onchange = "tmexistedit()" } })
                 @Html.ValidationMessageFor(model => model.TrademarkName, "", new { @class = "text-danger" })
+                <span id="spantrademarkname" class="text-danger"></span>
+
             </div>
         </div>
 
@@ -35,16 +37,57 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Guardar cambios" class="btn btn-success" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("<<Listado", "Index")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            etm = 0;
+
+
+        });
+
+
+
+        function tmexistedit() {
+
+            var options = {};
+            options.url = '@Url.Action("ExTrademarkEdit", "Trademarks")';
+            options.type = "GET";
+            options.data = { "des": $("#TrademarkName").val(),"id":@Model.IdTrademark };
+            options.dataType = "json";
+            options.success = function (data) {
+                if (data) {
+                    $('#spantrademarkname').text("Marca existente");
+                    etm = 1;
+                } else {
+                    $('#spantrademarkname').text("");
+                    etm = 0;
+                };
+
+            };
+            $.ajax(options);
+        }
+
+        $('#editTM').submit(function (e) {
+
+            var x = this;
+            e.preventDefault();
+
+            if (etm != 1) {
+                x.submit();
+            }
+
+        });
+
+    </script>
 }

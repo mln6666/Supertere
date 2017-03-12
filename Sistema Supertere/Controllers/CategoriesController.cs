@@ -35,7 +35,22 @@ namespace Sistema_Supertere.Controllers
             }
             return View(category);
         }
+        public JsonResult ExCat(string des)
+        {
+            //if (Trademark == "")
+            //    Trademark = "[Producto sin Marca]";
+            var existe = db.Categories.ToList().Exists(a => a.CategoryName == des);
 
+            return Json(existe, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ExCatEdit(string des, int id)
+        {
+            //if (Trademark == "")
+            //    Trademark = "[Producto sin Marca]";
+            var existe = db.Categories.ToList().Exists(a => a.CategoryName == des & a.IdCategory != id);
+
+            return Json(existe, JsonRequestBehavior.AllowGet);
+        }
         // GET: Categories/Create
         public ActionResult Create()
         {
