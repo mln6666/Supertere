@@ -93,7 +93,7 @@
             </td>
 
             <td>
-                <a id="@("act" + @item.IdProduct)" class="btn btn-warning btn-sm" onclick="deac(@item.IdProduct)">Activar</a>
+                <a id="@("act" + @item.IdProduct)" class="btn btn-primary btn-sm" onclick="act(@item.IdProduct)">Activar</a>
 
                 @Html.ActionLink("Edit", "Edit", new { id = item.IdProduct }) |
                 @Html.ActionLink("Details", "Details", new { id = item.IdProduct }) |
@@ -110,7 +110,7 @@
     <script>
 
 
-        function deac(x) {
+        function act(x) {
 
             var options = {};
             options.url = '@Url.Action("Activate", "Products")';
@@ -121,7 +121,7 @@
                 if (data) {
 
                     toastr["info"]("Producto activado correctamente.", "Exito");
-                    $('#deac'+x).closest('tr').remove();
+                    $('#act'+x).closest('tr').remove();
 
                 }
 

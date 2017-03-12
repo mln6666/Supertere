@@ -26,8 +26,14 @@ namespace Sistema_Supertere.Controllers
             var products = db.Products.ToList().FindAll(x => x.ProductState == false);
             return View(products);
         }
-        public ActionResult IndexAll()
+        public ActionResult IndexAll(int? x)
         {
+           
+                if (x != null)
+                {
+                    TempData["mimsg"] = x; return RedirectToAction("IndexAll");
+                }
+            
             var products = db.Products.ToList();
             return View(products);
         }
