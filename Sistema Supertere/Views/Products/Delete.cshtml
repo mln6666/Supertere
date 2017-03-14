@@ -4,12 +4,13 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+@if(Model.SaleLines==null || Model.SaleLines.Count() == 0) {
+    <h3>¿Está seguro que desea eliminar el siguiente producto?</h3>
+}
+else { <h3 style="color:red">Acción no admitida. No se permite eliminar productos que tengan ventas relacionadas.</h3>}
+<hr />
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Product</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Category.CategoryName)
@@ -99,8 +100,10 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @if(Model.SaleLines==null || Model.SaleLines.Count() == 0) {
+            <input type="submit" value="Eliminar" class="btn btn-danger"/>} 
         </div>
     }
+    <a href="@Url.Action("Index")" class="btn btn-default hvr-glow" style="margin-bottom: 5px;"> << Listado</a>
+
 </div>

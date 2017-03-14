@@ -85,6 +85,20 @@ namespace Sistema_Supertere.Controllers
 
             return Json(midato, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult VerifDeleteP(int id)
+        {
+
+            bool verif = false;
+
+
+            Product productdata = db.Products.ToList().Find(u => u.IdProduct == id);
+            if (productdata.SaleLines != null & productdata.SaleLines.Count() > 0)
+            {
+                verif = true;}
+
+
+            return Json(verif, JsonRequestBehavior.AllowGet);
+        }
         // GET: Products/Details/5
         public ActionResult Details(int? id)
         {

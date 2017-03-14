@@ -3,111 +3,131 @@
 @{
     ViewBag.Title = "Index";
 }
-<h3>Productos Activos</h3>
+<h3 class="text-center">Productos Activos</h3>
 <hr/>
 
-<div style="display: flex">
-    <a href="@Url.Action("Create", "Products")" class="btn-sm btn-success hvr-glow" style="margin-bottom: 5px;">Nuevo Producto</a>&nbsp;&nbsp;
+<div style="display: flex; margin-bottom: 5px">
+    <a href="@Url.Action("Create", "Products")" class="btn-sm btn-success hvr-glow">Nuevo Producto</a>&nbsp;&nbsp;
 
-    <a href="@Url.Action("Index", "Products")" class="btn-sm btn-info active hvr-glow" style="margin-bottom: 5px;">Activos</a>&nbsp;&nbsp;
-
-
-    <a href="@Url.Action("IndexDeac", "Products")" class="btn-sm btn-default hvr-glow" style="margin-bottom: 5px;">No activos</a>&nbsp;&nbsp;
+    <a href="@Url.Action("Index", "Products")" class="btn-sm btn-info active hvr-glow">Activos</a>&nbsp;&nbsp;
 
 
-    <a href="@Url.Action("IndexAll", "Products")" class="btn-sm btn-default hvr-glow" style="margin-bottom: 5px;">Todos</a>&nbsp;&nbsp;
+    <a href="@Url.Action("IndexDeac", "Products")" class="btn-sm btn-default hvr-glow">No activos</a>&nbsp;&nbsp;
+
+
+    <a href="@Url.Action("IndexAll", "Products")" class="btn-sm btn-default hvr-glow">Todos</a>&nbsp;&nbsp;
 
 
 </div>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Trademark.TrademarkName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Category.CategoryName)
-        </th>
-     
-        <th>
-            @Html.DisplayNameFor(model => model.Barcode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cost)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PublicPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UploadDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Stock)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Minimum)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductState)
-        </th>
+@if (Model == null || Model.Count() == 0)
 
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductDescription)
-        </td>
-    
-        <td>
-            @Html.DisplayFor(modelItem => item.Trademark.TrademarkName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category.CategoryName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Barcode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cost)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PublicPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UploadDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Stock)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Minimum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductState)
-        </td>
-
-        <td>
-            <a id="@("deac" + @item.IdProduct)" class="btn btn-warning btn-sm" onclick="deac(@item.IdProduct)">Desactivar</a>
-
-            @Html.ActionLink("Edit", "Edit", new {id = item.IdProduct}) |
-            @Html.ActionLink("Details", "Details", new {id = item.IdProduct}) |
-            @Html.ActionLink("Delete", "Delete", new {id = item.IdProduct})
-        </td>
-    </tr>
+{
+    <br/>
+    <br/>
+    <hr/>
+    <h2 class="text-center text-danger">No hay productos "Activos" disponibles</h2>
+    <hr/>
+    <br/>
+    <br/>
 }
+else
+{
+    <table id="mitabla" class="table table-condensed table-striped table-bordered ">
+        <thead >
+        <tr>
+            <th class="enclist">
+                @Html.DisplayNameFor(model => model.ProductDescription)
+            </th>
 
-</table>
+            <th class="enclist">
 
+                @Html.DisplayNameFor(model => model.Category.CategoryName)
+            </th>
+
+
+            <th class="enclist text-center">
+                @Html.DisplayNameFor(model => model.PublicPrice)
+            </th>
+
+            <th class="enclist text-center">
+                @Html.DisplayNameFor(model => model.Stock)
+            </th>
+
+            <th class="enclist text-center">
+                @Html.DisplayNameFor(model => model.Barcode)
+            </th>
+            <th class="enclist text-center">
+                Estado
+            </th>
+
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductDescription) | @Html.DisplayFor(modelItem => item.Trademark.TrademarkName)
+
+
+                </td>
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </td>
+
+
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.PublicPrice)
+                </td>
+
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.Stock)
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.Barcode)
+                </td>
+                <td class="text-center">
+                    <text style="color: green">Activo</text>
+                </td>
+
+
+                <td class="text-center">
+                    <a id="@("deac" + @item.IdProduct)" class="btn btn-warning btn-sm hvr-glow" onclick="deac(@item.IdProduct)">Desactivar</a>
+                    <a href="@Url.Action("Edit", new {id = item.IdProduct}))" class="btn btn-default btn-sm hvr-glow">Editar</a>
+                    <a href="@Url.Action("Details", new {id = item.IdProduct}))" class="btn btn-default btn-sm hvr-glow">Detalles</a>
+
+                    @if (item.SaleLines == null || item.SaleLines.Count() == 0)
+                    {
+                        <a href="@Url.Action("Delete", "Products", new {id = item.IdProduct})" class="btn btn-sm btn-danger hvr-glow">Eliminar</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-sm btn-danger hvr-glow" onclick="verif()">Eliminar</a>
+                    }
+
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-      
+        $(document).ready(function() {
+
+            ////Grilla automatica//
+            $("#mitabla").DataTable({
+                "language": {
+                    "url": "/Scripts/DataTables/spanish.json"
+                }
+            });
+        });
 
         function deac(x) {
 
@@ -116,19 +136,26 @@
             options.type = "POST";
             options.data = { "id": x };
             options.dataType = "json";
-            options.success = function (data) {
+            options.success = function(data) {
                 if (data) {
 
-                    toastr["info"]("Producto desactivado correctamente.", "Exito");
-                    $('#deac'+x).closest('tr').remove();
+                    toastr["info"]("Producto desactivado correctamente.", "Desactivación exitosa");
+                    $('#deac' + x).closest('tr').remove();
 
                 }
 
             };
             $.ajax(options);
         }
+        function verif() {
 
+                    toastr["error"]("No se permite eliminar productos con ventas asociadas.", "Acción no admitida");
+
+
+            };
+        
       
+
 
     </script>
 }
