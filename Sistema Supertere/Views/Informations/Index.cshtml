@@ -2,16 +2,18 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
+<h3 class="text-center">
+Ganancias</h3>
+<hr />
 
 @using (Ajax.BeginForm("DaySales", null,
                             new AjaxOptions
                             {
                                 InsertionMode = InsertionMode.Replace,
                                 UpdateTargetId = "ajaxBeginFormResult",
+                                LoadingElementId = "loader",
 
-                                OnSuccess = "OnSuccess",
+                                OnSuccess = "OnSuccess"
                             },
                         new { id = "FormName" }))
 
@@ -42,7 +44,5 @@
 
     </div>
 }
-
-
 
 <div class="text-center" id="ajaxBeginFormResult"></div>
