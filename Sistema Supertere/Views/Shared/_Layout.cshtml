@@ -79,8 +79,18 @@
                         <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
                             <li style="font-weight: bold;">@Html.ActionLink("Clientes", "Index", "Customers")</li>
                             <li style="font-weight: bold;">@Html.ActionLink("Cuentas", "Unpaid", "Customers")</li>
-                           
 
+
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a id="dLabel" data-toggle="dropdown" style="font-weight: bold" class="" data-target="#" href="/page.html">
+                            Información <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                            <li style="font-weight: bold;">@Html.ActionLink("Index", "Index", "Informations")</li>
+
+                            <li style="font-weight: bold;">@Html.ActionLink("Ventas por día", "DaySales", "Informations")</li>
                         </ul>
                     </li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>

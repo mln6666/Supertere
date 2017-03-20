@@ -1,0 +1,123 @@
+﻿@model Sistema_Supertere.ViewModels.DaySalesVM
+@{
+    ViewBag.Title = "DaySales";
+}
+
+<h3 class="text-center">Ventas del día</h3>
+<hr />
+
+<table class="table table-condensed table-bordered" style="table-layout: fixed">
+    <thead>
+        <tr class="text-center gradcelesteosc cabecera">
+            <th class="text-center" style="width: auto">
+                Fecha Consulta
+            </th>
+
+            <th class="text-center">
+                Total Ventas
+            </th>
+
+            <th class="text-center" style="width: auto">
+               Ganancia
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+    <td class="text-center ftb">
+@Model.Date.ToShortDateString()    </td>
+    <td id="cli" class="text-center ftb">
+@Model.DaySalesTotal    </td>
+    <td class="text-center ftb">
+@Model.DayGain.ToString("##0.00")
+    </td>
+    </tbody>
+</table>
+
+<table id="tablaprod" class="table table-condensed table-bordered" style="table-layout: fixed">
+    <thead>
+        <tr class="text-center gradcelestecla detalles ">
+
+            <th class="text-center" style="width: 40%">
+                Descripción
+            </th>
+
+            <th class="text-center" style="width: 17%">
+                Cantidad
+            </th>
+            <th class="text-center" style="width: 17%">
+                P. Unit.
+            </th>
+            <th class="text-center" style="width: 17%">
+                Importe($)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody id="last">
+        @foreach (var item in Model.Sales)
+        {
+            foreach (var line in item.SaleLines)
+            {
+                <tr style="background-color: white">
+                 
+                    <td class="ftb">
+                        @Html.DisplayFor(modelItem => line.Product.Trademark.TrademarkName) - @Html.DisplayFor(modelItem => line.Product.ProductDescription)
+                    </td>
+                    <td class="ftb text-center">
+                        @Html.DisplayFor(modelItem => line.LineQuantity)
+                    </td>
+                    <td class="ftb text-center">
+                        @Html.DisplayFor(modelItem => line.LinePrice)
+                    </td>
+                    <td class="ftb text-center negrita">
+                        @Html.DisplayFor(modelItem => line.LineTotal)
+                    </td>
+                </tr>
+            }
+
+        }
+        <tr id="trtot">
+            <td class="sinborde"></td>
+            <td class="sinborde"></td>
+            <th class="text-center gradcelesteosc tittot">TOTAL VENTAS</th>
+            <td class="ftot negrita text-center">
+@Model.DaySalesTotal            </td>
+            <td class="sinborde"></td>
+        </tr>
+        <tr>
+            <td class="sinborde"></td>
+
+            <td class="sinborde"></td>
+            <th class="text-center ftb">Ganancias</th>
+            <td class="ftb">
+@Model.DayGain.ToString("##0.00")
+            </td>
+            <td class="sinborde"></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="text-center hidden-print">
+    <a href="@Url.Action("Index", "Informations")" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> &nbsp; Volver</a>
+    <a onclick="print()" class="btn btn-warning dialog-window2 chicle">Imprimir</a>
+
+</div>
+
+
+@section Scripts{
+    <script>
+     
+      
+
+    </script>
+
+
+
+}

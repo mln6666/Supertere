@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@using (Ajax.BeginForm("DaySales", null,
+                            new AjaxOptions
+                            {
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "ajaxBeginFormResult",
+
+                                OnSuccess = "OnSuccess",
+                            },
+                        new { id = "FormName" }))
+
+
+{
+    @Html.AntiForgeryToken()
+    <div class="hidden-print">
+       
+        <div class="row form-horizontal">
+           
+            <div class="col-sm-1" style="padding-right: 0px"> <h4 class="text-right izq">Fecha:</h4></div>
+            <div class="col-sm-2">
+                <input id='from' class="form-control text-left"type="date" name="date" required />
+            </div>
+
+          
+
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-success text-center" >
+                    Generar&nbsp;<span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                </button>
+            </div>
+
+
+
+        </div>
+        
+
+    </div>
+}
+
+
+
+<div class="text-center" id="ajaxBeginFormResult"></div>
