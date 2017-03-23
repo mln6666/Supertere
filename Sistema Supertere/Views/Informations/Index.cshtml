@@ -24,7 +24,7 @@ Ganancias</h3>
        
         <div class="row form-horizontal">
            
-            <div class="col-sm-1" style="padding-right: 0px"> <h4 class="text-right izq">Fecha:</h4></div>
+            <div class="col-sm-1" style="padding-right: 0px"> <h4 class="text-right izq">Día:</h4></div>
             <div class="col-sm-2">
                 <input id='from' class="form-control text-left"type="date" name="date" required />
             </div>
@@ -45,4 +45,81 @@ Ganancias</h3>
     </div>
 }
 
+@using (Ajax.BeginForm("MonthSales", null,
+                                        new AjaxOptions
+                                        {
+                                            InsertionMode = InsertionMode.Replace,
+                                            UpdateTargetId = "ajaxBeginFormResult",
+                                            LoadingElementId = "loader",
+
+                                            OnSuccess = "OnSuccess"
+                                        },
+                                    new { id = "FormmName" }))
+
+
+{
+    @Html.AntiForgeryToken()
+    <div class="hidden-print">
+
+        <div class="row form-horizontal">
+
+            <div class="col-sm-1" style="padding-right: 0px"> <h4 class="text-right izq">Mes:</h4></div>
+            <div class="col-sm-2">
+                <input id='from' class="form-control text-left" type="date" name="date" required />
+            </div>
+
+
+
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-success text-center">
+                    Generar&nbsp;<span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                </button>
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+}
+
+@using (Ajax.BeginForm("YearSales", null,
+                                                    new AjaxOptions
+                                                    {
+                                                        InsertionMode = InsertionMode.Replace,
+                                                        UpdateTargetId = "ajaxBeginFormResult",
+                                                        LoadingElementId = "loader",
+
+                                                        OnSuccess = "OnSuccess"
+                                                    },
+                                                new { id = "FormmName" }))
+
+
+{
+    @Html.AntiForgeryToken()
+    <div class="hidden-print">
+
+        <div class="row form-horizontal">
+
+            <div class="col-sm-1" style="padding-right: 0px"> <h4 class="text-right izq">Año:</h4></div>
+            <div class="col-sm-2">
+                <input id='from' class="form-control text-left" type="date" name="date" required />
+            </div>
+
+
+
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-success text-center">
+                    Generar&nbsp;<span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                </button>
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+}
 <div class="text-center" id="ajaxBeginFormResult"></div>

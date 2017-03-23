@@ -1,13 +1,16 @@
-﻿@model Sistema_Supertere.ViewModels.DaySalesVM
+﻿@model Sistema_Supertere.ViewModels.YearSalesVM
+@{
+    Layout = null;
+}
 
-<h3 class="text-center">Ventas del día</h3>
+<h3 class="text-center">Ventas del Mes</h3>
 <hr />
 
 <table class="table table-condensed table-bordered" style="table-layout: fixed">
     <thead>
         <tr class="text-center gradcelesteosc cabecera">
             <th class="text-center" style="width: auto">
-                Fecha
+                Año
             </th>
 
             <th class="text-center">
@@ -15,18 +18,20 @@
             </th>
 
             <th class="text-center" style="width: auto">
-               Ganancia
+                Ganancia
             </th>
 
         </tr>
     </thead>
     <tbody>
     <td class="text-center ftb">
-@Model.Date.ToShortDateString()    </td>
+        @Model.YDate.Year
+    </td>
     <td id="cli" class="text-center ftb">
-@Model.DaySalesTotal    </td>
+        @Model.YearSalesTotal
+    </td>
     <td class="text-center ftb">
-@Model.DayGain.ToString("##0.00")
+        @Model.YearGain.ToString("##0.00")
     </td>
     </tbody>
 </table>
@@ -35,64 +40,65 @@
     <thead>
         <tr class="text-center gradcelestecla detalles ">
 
-            <th class="text-center" style="width: 40%">
-                Descripción
+            <th class="text-center" style="width: 30%">
+                Mes
             </th>
 
-            <th class="text-center" style="width: 20%">
-                Cantidad
+            <th class="text-center" style="width: 30%">
+                Total Mes
             </th>
-            <th class="text-center" style="width: 20%">
-                P. Unit.
+            <th class="text-center" style="width: 30%">
+                Ganancias Mes
             </th>
-            <th class="text-center" style="width: 20%">
-                Importe($)
+            <th class="text-center" style="width: 10%">
+                Acciones
             </th>
 
         </tr>
     </thead>
     <tbody id="last">
-        @foreach (var item in Model.Sales)
+        @foreach (var item in Model.MonthSales)
         {
-            foreach (var line in item.SaleLines)
-            {
-                <tr style="background-color: white">
-                 
-                    <td class="ftb">
-                        @Html.DisplayFor(modelItem => line.Product.Trademark.TrademarkName) - @Html.DisplayFor(modelItem => line.Product.ProductDescription)
-                    </td>
-                    <td class="ftb text-center">
-                        @Html.DisplayFor(modelItem => line.LineQuantity)
-                    </td>
-                    <td class="ftb text-center">
-                        @Html.DisplayFor(modelItem => line.LinePrice)
-                    </td>
-                    <td class="ftb text-center negrita">
-                        @Html.DisplayFor(modelItem => line.LineTotal)
-                    </td>
-                </tr>
-            }
+
+            <tr style="background-color: white">
+
+                <td class="ftb">
+                    @item.MDate.Month
+                </td>
+                <td class="ftb text-center">
+                    @Html.DisplayFor(modelItem => item.MonthSalesTotal)
+                </td>
+                <td class="ftb text-center">
+                    @Html.DisplayFor(modelItem => item.MonthGain)
+                </td>
+                <td class="ftb text-center negrita">
+                    @Html.ActionLink("Detalles", "MonthSales", new { date = item.MDate }) |
+
+                </td>
+            </tr>
+
 
         }
         <tr id="trtot">
             <td class="sinborde"></td>
             <td class="sinborde"></td>
-            <th class="text-center gradcelesteosc tittot">TOTAL VENTAS</th>
+            <th class="text-center gradcelesteosc tittot">TOTAL AÑO</th>
             <td class="ftot negrita text-center">
-@Model.DaySalesTotal            </td>
+                @Model.YearSalesTotal
+            </td>
             <td class="sinborde"></td>
         </tr>
         <tr>
             <td class="sinborde"></td>
 
             <td class="sinborde"></td>
-            <th class="text-center ftb">Ganancias</th>
+            <th class="text-center ftb">Ganancias Año</th>
             <td class="ftb">
-@Model.DayGain.ToString("##0.00")
+                @Model.YearGain.ToString("##0.00")
             </td>
             <td class="sinborde"></td>
         </tr>
-    
+
     </tbody>
 </table>
 
@@ -108,7 +114,7 @@
 </div>
 
 
-    <script>
+<script>
         $(document).ready(function() {
             $("#loader").hide();
 
@@ -116,7 +122,7 @@
 
 
 
-    </script>
+</script>
 
 
 

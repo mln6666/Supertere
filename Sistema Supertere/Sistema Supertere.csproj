@@ -229,8 +229,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\DaySalesVM.cs" />
+    <Compile Include="ViewModels\MonthSalesVM.cs" />
     <Compile Include="ViewModels\PurchaseVM.cs" />
     <Compile Include="ViewModels\SaleVM.cs" />
+    <Compile Include="ViewModels\YearSalesVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-select.css" />
@@ -826,6 +828,8 @@
     <Content Include="Views\Products\IndexAll.cshtml" />
     <Content Include="Views\Informations\DaySales.cshtml" />
     <Content Include="Views\Informations\Index.cshtml" />
+    <Content Include="Views\Informations\MonthSales.cshtml" />
+    <Content Include="Views\Informations\YearSales.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
