@@ -1,11 +1,11 @@
 ﻿@model Sistema_Supertere.ViewModels.YearSalesVM
-@{
-    Layout = null;
-}
 
-<h3 class="text-center">Ventas del Mes</h3>
+<h3 class="text-center">Ventas Año:@Model.YDate.Year
+ </h3>
 <hr />
-
+@{
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+}
 <table class="table table-condensed table-bordered" style="table-layout: fixed">
     <thead>
         <tr class="text-center gradcelesteosc cabecera">
@@ -14,11 +14,11 @@
             </th>
 
             <th class="text-center">
-                Total Ventas
+                Total Año
             </th>
 
             <th class="text-center" style="width: auto">
-                Ganancia
+                Ganancia Año
             </th>
 
         </tr>
@@ -63,7 +63,11 @@
             <tr style="background-color: white">
 
                 <td class="ftb">
-                    @item.MDate.Month
+                    @{
+                        var month = System.Globalization.CultureInfo.CurrentUICulture.DateTimeFormat.GetMonthName(item.MDate.Month);
+                    }
+
+@Html.DisplayFor(model => month)
                 </td>
                 <td class="ftb text-center">
                     @Html.DisplayFor(modelItem => item.MonthSalesTotal)
@@ -72,7 +76,8 @@
                     @Html.DisplayFor(modelItem => item.MonthGain)
                 </td>
                 <td class="ftb text-center negrita">
-                    @Html.ActionLink("Detalles", "MonthSales", new { date = item.MDate }) |
+                    @*@Html.ActionLink("Detalles", "MonthSales", new { date = item.MDate }) |*@
+                    <a href="@Url.Action("MonthSales", "Informations", new {date = item.MDate })" class="btn btn-primary btn-xs" target="_blank" title="Detalles"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
 
                 </td>
             </tr>
@@ -82,7 +87,9 @@
         <tr id="trtot">
             <td class="sinborde"></td>
             <td class="sinborde"></td>
-            <th class="text-center gradcelesteosc tittot">TOTAL AÑO</th>
+            <th class="text-center gradcelesteosc tittot">
+                TOTAL AÑO
+            </th>
             <td class="ftot negrita text-center">
                 @Model.YearSalesTotal
             </td>
@@ -92,8 +99,10 @@
             <td class="sinborde"></td>
 
             <td class="sinborde"></td>
-            <th class="text-center ftb">Ganancias Año</th>
-            <td class="ftb">
+            <th class="text-center gradcelesteosc tittot">
+                Ganancias Año
+            </th>
+            <td class="ftot negrita text-center">
                 @Model.YearGain.ToString("##0.00")
             </td>
             <td class="sinborde"></td>
@@ -114,15 +123,11 @@
 </div>
 
 
-<script>
-        $(document).ready(function() {
-            $("#loader").hide();
-
-        });
 
 
 
-</script>
+
+
 
 
 

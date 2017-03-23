@@ -36,29 +36,29 @@ namespace Sistema_Supertere.Controllers
             return View(ds);
         }
 
-        [HttpPost]
-        [ActionName("DaySales")]
-        public ActionResult DaySalesPost(DateTime date)
-        {
-            DaySalesVM ds=new DaySalesVM();
-            ds.Date = date;
-            ds.Sales = db.Sales.ToList().FindAll(x => x.SaleDate == date & x.SaleState != SaleState.Cuenta);
-            ds.DaySalesTotal = 0;
-            ds.DayGain = 0;
+        //[HttpPost]
+        //[ActionName("DaySales")]
+        //public ActionResult DaySalesPost(DateTime date)
+        //{
+        //    DaySalesVM ds=new DaySalesVM();
+        //    ds.Date = date;
+        //    ds.Sales = db.Sales.ToList().FindAll(x => x.SaleDate == date & x.SaleState != SaleState.Cuenta);
+        //    ds.DaySalesTotal = 0;
+        //    ds.DayGain = 0;
 
-            foreach (var sale in ds.Sales)
-            {
-                foreach (var saleline in sale.SaleLines)
-                {
-                    ds.DaySalesTotal += saleline.LineTotal;
-                }
+        //    foreach (var sale in ds.Sales)
+        //    {
+        //        foreach (var saleline in sale.SaleLines)
+        //        {
+        //            ds.DaySalesTotal += saleline.LineTotal;
+        //        }
                 
-            }
-            ds.DayGain = ds.DaySalesTotal * 0.25m;
+        //    }
+        //    ds.DayGain = ds.DaySalesTotal * 0.25m;
 
 
-            return View(ds);
-        }
+        //    return View(ds);
+        //}
         public ActionResult MonthSales(DateTime date)
         {
             //var salesm = db.Sales.ToList().FindAll(x => x.SaleDate.Month == date.Month &x.SaleDate.Year==date.Year & x.SaleState != SaleState.Cuenta);
@@ -99,49 +99,48 @@ namespace Sistema_Supertere.Controllers
 
             return View(ms);
         }
-        [HttpPost]
-        [ActionName("MonthSales")]
-        public ActionResult MonthSalesPost(DateTime date)
-        {
-            //var salesm = db.Sales.ToList().FindAll(x => x.SaleDate.Month == date.Month &x.SaleDate.Year==date.Year & x.SaleState != SaleState.Cuenta);
+        //[HttpPost]
+        //[ActionName("MonthSales")]
+        //public ActionResult MonthSalesPost(DateTime date)
+        //{
+        //    //var salesm = db.Sales.ToList().FindAll(x => x.SaleDate.Month == date.Month &x.SaleDate.Year==date.Year & x.SaleState != SaleState.Cuenta);
 
 
-            MonthSalesVM ms = new MonthSalesVM();
-            ms.MDate = date;
-            ms.MonthSalesTotal = 0;
-            ms.MonthGain = 0;
-            List<DaySalesVM> lista= new List<DaySalesVM>();
-            int days = DateTime.DaysInMonth(date.Year, date.Month);
+        //    MonthSalesVM ms = new MonthSalesVM();
+        //    ms.MDate = date;
+        //    ms.MonthSalesTotal = 0;
+        //    ms.MonthGain = 0;
+        //    List<DaySalesVM> lista= new List<DaySalesVM>();
+        //    int days = DateTime.DaysInMonth(date.Year, date.Month);
 
-            for (int day = 1; day <= days; day++)
-            {
-                DaySalesVM ds = new DaySalesVM();
-                ds.Date = new DateTime(date.Year,date.Month,day);
-                ds.Sales = db.Sales.ToList().FindAll(x => x.SaleDate == ds.Date & x.SaleState != SaleState.Cuenta);
-                ds.DaySalesTotal = 0;
-                ds.DayGain = 0;
+        //    for (int day = 1; day <= days; day++)
+        //    {
+        //        DaySalesVM ds = new DaySalesVM();
+        //        ds.Date = new DateTime(date.Year,date.Month,day);
+        //        ds.Sales = db.Sales.ToList().FindAll(x => x.SaleDate == ds.Date & x.SaleState != SaleState.Cuenta);
+        //        ds.DaySalesTotal = 0;
+        //        ds.DayGain = 0;
 
-                if (ds.Sales.Count > 0) { 
-                foreach (var item in ds.Sales)
-                {
-                    foreach (var saleline in item.SaleLines)
-                    {
-                        ds.DaySalesTotal += saleline.LineTotal;
-                    }
-                }
-                    ds.DayGain = ds.DaySalesTotal * 0.25m;
-                    ms.MonthSalesTotal += ds.DaySalesTotal;
-                }
-                lista.Add(ds);
+        //        if (ds.Sales.Count > 0) { 
+        //        foreach (var item in ds.Sales)
+        //        {
+        //            foreach (var saleline in item.SaleLines)
+        //            {
+        //                ds.DaySalesTotal += saleline.LineTotal;
+        //            }
+        //        }
+        //            ds.DayGain = ds.DaySalesTotal * 0.25m;
+        //            ms.MonthSalesTotal += ds.DaySalesTotal;
+        //        }
+        //        lista.Add(ds);
 
-            }
-            ms.DaySales = lista;
-            ms.MonthGain = ms.MonthSalesTotal * 0.25m;
+        //    }
+        //    ms.DaySales = lista;
+        //    ms.MonthGain = ms.MonthSalesTotal * 0.25m;
 
-            return View(ms);
-        }
+        //    return View(ms);
+        //}
 
-        [HttpPost]
         public ActionResult YearSales(DateTime date)
         {
             //var salesm = db.Sales.ToList().FindAll(x => x.SaleDate.Month == date.Month &x.SaleDate.Year==date.Year & x.SaleState != SaleState.Cuenta);
