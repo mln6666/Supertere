@@ -62,7 +62,7 @@
 
             <tr style="background-color: white">
 
-                <td class="ftb">
+                <td class="ftb" style="text-transform: capitalize">
                     @{
                         var month = System.Globalization.CultureInfo.CurrentUICulture.DateTimeFormat.GetMonthName(item.MDate.Month);
                     }
@@ -75,7 +75,7 @@
                 <td class="ftb text-center">
                     @Html.DisplayFor(modelItem => item.MonthGain)
                 </td>
-                <td class="ftb text-center negrita">
+                <td class="ftb text-center">
                     @*@Html.ActionLink("Detalles", "MonthSales", new { date = item.MDate }) |*@
                     <a href="@Url.Action("MonthSales", "Informations", new {date = item.MDate })" class="btn btn-primary btn-xs" target="_blank" title="Detalles"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
 
@@ -85,7 +85,6 @@
 
         }
         <tr id="trtot">
-            <td class="sinborde"></td>
             <td class="sinborde"></td>
             <th class="text-center gradcelesteosc tittot">
                 TOTAL AÑO
@@ -98,7 +97,6 @@
         <tr>
             <td class="sinborde"></td>
 
-            <td class="sinborde"></td>
             <th class="text-center gradcelesteosc tittot">
                 Ganancias Año
             </th>
